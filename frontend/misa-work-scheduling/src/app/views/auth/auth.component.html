@@ -1,0 +1,21 @@
+<div>
+    <div>
+        <p>{{error}}</p>
+    </div>
+    <div>
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    </div>
+    <div>
+        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+            <div>
+                <label for="username">Username</label>
+                <input name="username" id="username" ngModel required>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" ngModel required>
+            </div>
+            <button type="submit" [disabled]="!authForm.valid">Login</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<p>header works!</p>
+<div>
+    <div *ngIf="isAuthenticated">Auth</div>
+    <div *ngIf="!isAuthenticated">UnAuth</div>
+    <button *ngIf="!isAuthenticated" (click)="onLogin()">Login</button>
+    <button *ngIf="isAuthenticated" (click)="onLogout()">Logout</button>
+</div>
