@@ -11,6 +11,7 @@ interface AuthResponseData {
         email: string,
         userId: string,
         username: string
+        avatar: string
     };
     accessToken: string,
     refreshToken: string
@@ -23,14 +24,14 @@ export class AuthService {
 
     private tokenExperationTimer: any;
 
+    private baseRoute = '/Auth';
+
     constructor(private http: HttpClient, private router: Router) { }
-
-
 
     login(username: string, password: string) {
         return this.http
             .post<AuthResponseData>(
-                'https://localhost:44359/api/Auth/login',
+                this.baseRoute + '/login',
                 {
                     username: username,
                     password: password,
@@ -46,6 +47,7 @@ export class AuthService {
                             resData.user.email,
                             resData.user.userId,
                             resData.user.username,
+                            resData.user.avatar,
                             resData.accessToken,
                             resData.refreshToken,
                         );
@@ -65,6 +67,7 @@ export class AuthService {
             userData['email'],
             userData['userId'],
             userData['username'],
+            userData['avatar'],
             userData['_accessToken'],
             new Date(userData['_accessTokenExpDate']),
             userData['_refreshToken'],
@@ -75,7 +78,7 @@ export class AuthService {
             || !loadedUser.accessTokenExpDate
             || !loadedUser.accessToken
         ) {
-            this.refresh(loadedUser.refreshToken).subscribe(
+            this.refresh().subscribe(
                 resData => {
                     console.log(resData);
                 }
@@ -89,10 +92,14 @@ export class AuthService {
         }
     }
 
-    refresh(rToken: string) {
+    refresh() {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+
+        const rToken = userData['_refreshToken'];
+
         return this.http
             .post<AuthResponseData>(
-                'https://localhost:44359/api/Auth/refresh',
+                this.baseRoute + '/refresh',
                 {
                     refreshToken: rToken,
                 }
@@ -117,6 +124,7 @@ export class AuthService {
                         userData.email,
                         userData.userId,
                         userData.username,
+                        userData.avatar ?? "",
                         resData.accessToken,
                         userData._refreshToken,
                     );
@@ -134,11 +142,7 @@ export class AuthService {
         }
 
         this.tokenExperationTimer = setTimeout(() => {
-            const userData = JSON.parse(localStorage.getItem('userData'));
-
-            this.refresh(
-                userData['_refreshToken']
-            ).subscribe(
+            this.refresh().subscribe(
                 resData => {
                     console.log(resData);
                 }
@@ -150,7 +154,7 @@ export class AuthService {
     logout() {
         this.http
             .post<AuthResponseData>(
-                'https://localhost:44359/api/Auth/logout',
+                this.baseRoute + '/logout',
                 {}
             )
             .pipe(
@@ -175,6 +179,7 @@ export class AuthService {
         email: string,
         userId: string,
         username: string,
+        avatar: string,
         accessToken: string,
         refreshToken: string
     ) {
@@ -193,7 +198,7 @@ export class AuthService {
 
         const refreshTokenExpDate = new Date(refreshExpiresTime)
 
-        const user = new User(email, userId, username, accessToken, accessTokenExpDate, refreshToken, refreshTokenExpDate);
+        const user = new User(email, userId, username, avatar, accessToken, accessTokenExpDate, refreshToken, refreshTokenExpDate);
 
         this.user.next(user);
         localStorage.setItem('userData', JSON.stringify(user));

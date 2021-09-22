@@ -1,7 +1,27 @@
-<p>header works!</p>
-<div>
-    <div *ngIf="isAuthenticated">Auth</div>
-    <div *ngIf="!isAuthenticated">UnAuth</div>
-    <button *ngIf="!isAuthenticated" (click)="onLogin()">Login</button>
-    <button *ngIf="isAuthenticated" (click)="onLogout()">Logout</button>
+<div class="app-header">
+    <div class="left-container">
+        <div [routerLink]="isAuthenticated ? '/calendar' : '/'">
+            <span>MISA Schedule</span>
+            <img src="../../../../assets/images/logo.png" alt="LOGO HERE" />
+        </div> 
+    </div>
+    <div class="right-container">
+        <div *ngIf="!isAuthenticated">
+            <button class="btn" id="btn-login" (click)="onLogin()">Login</button>
+        </div>
+        <div *ngIf="isAuthenticated">
+            <div ngbDropdown>
+                <button class="btn btn-dropdown" ngbDropdownToggle>
+                    <img [src]="user.avatar ?? '../../../../assets/images/default-avatar.png'"
+                        class="rounded mx-auto d-block" alt="...">
+                </button>
+                <div>
+                    <div ngbDropdownMenu aria-labelledby="userInfoDropdown">
+                        <div class="username">{{user.username}}</div>
+                        <button ngbDropdownItem class="btn" (click)="onLogout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

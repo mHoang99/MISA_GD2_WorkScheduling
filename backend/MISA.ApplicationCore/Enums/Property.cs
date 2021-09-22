@@ -17,4 +17,16 @@ namespace MISA.ApplicationCore.Enums
         UPDATE = 2,
         REMOVE = 3
     }
+    public enum Gender
+    {
+        MALE = 1,
+        FEMALE = 0
+    }
+
+    public enum EventState
+    {
+        WAITING = 0,
+        APPROVED = 1,
+        COMPLETED = 2
+    }
 }

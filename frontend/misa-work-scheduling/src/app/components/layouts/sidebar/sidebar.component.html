@@ -1,0 +1,23 @@
+<div class="app-sidebar" *ngIf="isAuthenticated" collapsed>
+    <div routerLinkActive="active-link" routerLink="/calendar/daily" title="Lịch ngày">
+        <i class="bi bi-calendar-event"></i>
+        <span>Lịch ngày</span>
+    </div>
+    <div routerLinkActive="active-link"  routerLink="/calendar/weekly" title="Lịch tuần">
+        <i class="bi bi-calendar-week"></i>
+        <span>Lịch tuần</span>
+    </div>
+    <div routerLinkActive="active-link" routerLink="/calendar/monthly" title="Lịch tháng">
+        <i class="bi bi-calendar-fill"></i>
+        <span>Lịch tháng</span>
+    </div>
+    <div routerLinkActive="active-link" routerLink="/waiting" title="Chờ phê duyệt">
+        <i class="bi bi-hourglass-split"></i>
+        <span>Chờ phê duyệt</span>
+    </div>
+    <div routerLinkActive="active-link" routerLink="/settings" title="Cài đặt">
+        <i class="bi bi-gear"></i>
+        <span>Cài đặt</span>
+    </div>
+
+</div>

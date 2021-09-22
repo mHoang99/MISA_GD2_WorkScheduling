@@ -1,10 +1,12 @@
-import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { HttpEventType, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { exhaustMap, take } from "rxjs/operators";
+import { exhaustMap, take, tap } from "rxjs/operators";
 import { AuthService } from "./auth.service";
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
+
+    private baseUrl = "https://localhost:44359/api"
 
     constructor(private authService: AuthService) {
     }
@@ -17,13 +19,23 @@ export class AuthInterceptorService implements HttpInterceptor {
                     let modifiedReq = req.clone(
                         {
                             headers: req.headers.append(
-                                'Authorization', 
-                                user?.accessToken 
-                                ? `Bearer ${user.accessToken }`
-                                : ""
-                            )
+                                'Authorization',
+                                user?.accessToken
+                                    ? `Bearer ${user.accessToken}`
+                                    : ""
+                            ),
+                            url: `${this.baseUrl}${req.url}`
                         });
-                    return next.handle(modifiedReq);
-                }));
+                    return next.handle(modifiedReq).pipe(
+                        tap(event => {
+                            if (event.type === HttpEventType.Response) {
+                                if (event.status === 401) {
+                                    this.authService.logout();
+                                }
+                            }
+                        })
+                    );
+                })
+            );
     }
 }

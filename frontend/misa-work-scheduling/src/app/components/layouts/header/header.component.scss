@@ -1,0 +1,72 @@
+.app-header {
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 8px 6px 24px;
+    border-bottom: 1px solid black;
+    z-index: 1000;
+
+    .left-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & > div {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            span {
+                color: white;
+                line-height: 100%;
+                text-transform: capitalize;
+                font-weight: bold;
+            }
+            img {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 3px;
+            }
+        }
+    }
+
+    .right-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        #btn-login{
+            background-color: #ff4500;
+            color: white;
+            height: 40px;
+            text-align: center;
+        }
+
+        .dropdown-toggle {
+            img {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px !important;
+            }
+
+            &:focus {
+                box-shadow: none !important;
+            }
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .dropdown-menu {
+            text-align: right;
+            width: 60px;
+            box-shadow: 0 0 0 0.2rem rgb(255 69 0 / 50%);
+            .username {
+                padding: 4px 24px;
+                font-weight: 700px;
+                font-size: 1.1rem;
+                color: grey;
+            }
+        }
+    }
+}

@@ -19,7 +19,7 @@ namespace MISA.WorkScheduling.API
     /// Base Api controller 
     /// </summary>
     /// CREATED_BY: vmhoang (27/07/2021)
-    [Route("api/v1/[controller]s")]
+    [Route("api/[controller]s")]
     [ApiController]
     [EnableCors("MyPolicy")]
     public abstract class BaseApiController<T> : ControllerBase where T : BaseModel

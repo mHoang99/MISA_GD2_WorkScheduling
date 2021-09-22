@@ -1,0 +1,11 @@
+.app {
+    .app-container {
+        display: flex;
+        padding: 0;
+        height: calc(100vh - 64px);
+
+        .sidebar {
+            height: 100%;
+        }
+    }
+}

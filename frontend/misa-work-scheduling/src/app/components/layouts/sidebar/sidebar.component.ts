@@ -1,0 +1,22 @@
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
+
+@Component({
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss']
+})
+export class FooterComponent implements OnInit {
+
+    isAuthenticated: boolean;
+
+    constructor(private authService: AuthService) {
+    }
+
+    ngOnInit() {
+        this.authService.user.subscribe(user => {
+            this.isAuthenticated = !!user;
+        })
+    }
+
+}

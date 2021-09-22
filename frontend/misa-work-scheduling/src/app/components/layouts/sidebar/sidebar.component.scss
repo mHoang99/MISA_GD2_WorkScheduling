@@ -1,0 +1,70 @@
+:host {
+    background-color: black;
+    .app-sidebar {
+        width: 160px;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: flex-start;
+
+        .active-link {
+            background-color: white;
+            padding: 10px 8px 10px 24px;
+            margin-left: 10px;
+            border-radius: 16px 0 0 16px;
+
+            ::after {
+                display: block;
+                background-color: red;
+                width: 10px;
+                height: 10px;
+            }
+
+            i {
+                color: orangered;
+            }
+
+            span {
+                color: black;
+                font-weight: bold;
+            }
+        }
+
+        & > div {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 12px 24px;
+            width: 100%;
+            cursor: pointer;
+
+            i {
+                color: white;
+            }
+
+            span {
+                color: #cacaca;
+                width: 100%;
+                margin-left: 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        &[collapsed] {
+            width: 60px;
+
+            span {
+                display: none;
+            }
+
+            &>div {
+                padding-left: 21px;
+            }
+
+            &>div.active-link {
+                padding-left: 16px;
+            }
+        }
+    }
+}
