@@ -13,7 +13,6 @@ namespace MISA.Infrastructure
 {
     public class AuthRepository : BaseRepository<RefreshToken>, IAuthRepository
     {
-        private new string _tableName = "RefreshToken";
         public AuthRepository(IDBContext dbContext) : base(dbContext)
         {
         }

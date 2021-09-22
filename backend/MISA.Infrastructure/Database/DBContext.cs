@@ -29,7 +29,7 @@ namespace MISA.Infrastructure.Database
         /// </summary>
         public DBContext(IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("LocalDB");
+            var connectionString = configuration.GetConnectionString("RemoteDB");
             DbConnection = new MySqlConnection(connectionString);
         }
         #endregion
