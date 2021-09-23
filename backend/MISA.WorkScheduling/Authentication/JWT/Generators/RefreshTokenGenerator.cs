@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace MISA.WorkScheduling.API.Authentication.JWT
 {
+    /// <summary>
+    /// Class tạo refresh token
+    /// </summary>
+    /// CREATED_BY: vmhoang
     public class RefreshTokenGenerator : TokenGenerator
     {
         public RefreshTokenGenerator(IConfiguration config) : base(

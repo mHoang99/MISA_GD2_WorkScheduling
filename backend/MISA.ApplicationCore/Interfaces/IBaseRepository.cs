@@ -21,6 +21,11 @@ namespace MISA.ApplicationCore.Interfaces
         /// <returns>Danh sách tất cả dữ liệu</returns>
         Task<IEnumerable<T>> Get();
         /// <summary>
+        /// Lấy tất cả dữ liệu trong view
+        /// </summary>
+        /// <returns>Danh sách tất cả dữ liệu</returns>
+        Task<IEnumerable<Object>> GetView();
+        /// <summary>
         /// Lấy dữ liệu qua khóa chính
         /// </summary>
         /// <param name="id">Khóa chính</param>

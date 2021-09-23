@@ -4,12 +4,18 @@ import { throwError } from "rxjs";
 import { catchError } from 'rxjs/operators';
 
 
-
+/**
+ * Base class cho việc gọi api
+ */
 export class HttpService {
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(protected http: HttpClient, protected router: Router) { }
 
     protected defaultPath = "";
 
+    /**
+     * Lấy tất cả
+     * @returns Observable response
+     */
     getAll() {
         return this.http
             .get(
@@ -22,6 +28,11 @@ export class HttpService {
             )
     }
 
+    /**
+     * Lấy theo id
+     * @param id 
+     * @returns Observable response
+     */
     getById(id: string) {
         return this.http
             .get(
@@ -34,6 +45,11 @@ export class HttpService {
             )
     }
 
+    /**
+     * Thêm mới
+     * @param body Request body
+     * @returns Observable response
+     */
     post(body: {}) {
         return this.http
             .post(
@@ -47,6 +63,12 @@ export class HttpService {
             )
     }
 
+    /**
+     * Thay đổi
+     * @param id 
+     * @param body Request body
+     * @returns Observable response
+     */
     put(id: string, body: {}) {
         return this.http
             .put(
@@ -60,6 +82,12 @@ export class HttpService {
             )
     }
 
+    /**
+     * Xóa
+     * @param id 
+     * @param body Request body
+     * @returns Observable response
+     */
     delete(id: string) {
         return this.http
             .delete(
@@ -72,6 +100,11 @@ export class HttpService {
             )
     }
 
+    /**
+     * Handle lỗi trả về từ api
+     * @param errorRes Lỗi
+     * @returns 
+     */
     protected handleError(errorRes: HttpErrorResponse) {
         let errorMessage = 'An unknown error occurred!';
         if (!errorRes.error) {

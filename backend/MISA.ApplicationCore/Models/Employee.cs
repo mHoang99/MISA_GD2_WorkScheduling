@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace MISA.ApplicationCore.Models
 {
+    /// <summary>
+    /// Model cho bảng nhân viên
+    /// </summary>
+    /// CREATED_BY: vmhoang
     class Employee : BaseModel
     {
         [PrimaryKey]

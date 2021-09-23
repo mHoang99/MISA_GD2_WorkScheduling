@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace MISA.WorkScheduling.API.Authentication.JWT.Validators
 {
+    /// <summary>
+    /// Class kiểm tra refresh token
+    /// </summary>
+    /// CREATED_BY: vmhoang
     public class RefreshTokenValidator
     {
 
@@ -19,9 +23,16 @@ namespace MISA.WorkScheduling.API.Authentication.JWT.Validators
             _config = config;
         }
 
+
+        /// <summary>
+        /// Xác thực token
+        /// </summary>
+        /// <param name="refreshToken"></param>
+        /// <returns>true: Hợp lệ | false: Không hợp lệ</returns>
+        /// CREATED_BY: vmhoang
         public bool Validate(string refreshToken)
         {
-
+            //Thiết lập các params để xác thực
             var validationParameters = new TokenValidationParameters
             {
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtConfig:RefreshTokenSecret"])),
@@ -37,6 +48,7 @@ namespace MISA.WorkScheduling.API.Authentication.JWT.Validators
 
             try
             {
+                //validate token
                 tokenHandler.ValidateToken(refreshToken, validationParameters, out SecurityToken validatedToken);
 
                 return true;

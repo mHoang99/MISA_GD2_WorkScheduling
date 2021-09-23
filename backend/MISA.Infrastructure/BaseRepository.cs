@@ -47,6 +47,15 @@ namespace MISA.Infrastructure
             return entities;
         }
 
+        async public Task<IEnumerable<Object>> GetView()
+        {
+            //Khởi tạo commandText
+            var query = $"SELECT * FROM View_{_tableName}";
+
+            var entities = await _dbConnection.QueryAsync<T>(query, commandType: CommandType.Text);
+            return entities;
+        }
+
         async public virtual Task<T> GetEntityById(Guid id)
         {
             var query = $"SELECT * FROM {_tableName} WHERE {_tableName}Id = '{id}'";

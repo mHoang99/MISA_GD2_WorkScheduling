@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace MISA.ApplicationCore.Models
 {
+    /// <summary>
+    /// Model cho bảng manager
+    /// </summary>
+    /// CREATED_BY: vmhoang
     class Manager : BaseModel
     {
         [PrimaryKey]

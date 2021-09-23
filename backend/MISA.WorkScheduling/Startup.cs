@@ -12,10 +12,12 @@ using Microsoft.OpenApi.Models;
 using MISA.ApplicationCore;
 using MISA.ApplicationCore.Authentication;
 using MISA.ApplicationCore.Interfaces;
+using MISA.ApplicationCore.Services;
 using MISA.Infrastructure;
 using MISA.Infrastructure.Database;
 using MISA.WorkScheduling.API.Authentication.JWT;
 using MISA.WorkScheduling.API.Authentication.JWT.Validators;
+using MISA.WorkScheduling.API.Middlewares;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,9 +66,11 @@ namespace MISA.WorkScheduling
             services.AddSingleton<RefreshTokenGenerator>();
             services.AddSingleton<RefreshTokenValidator>();
             services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
             services.AddTransient<IDBContext, DBContext>();
 
             //services.AddControllers().AddJsonOptions(options => {
@@ -94,6 +98,9 @@ namespace MISA.WorkScheduling
             app.UseRouting();
 
             app.UseCors();
+
+            // global error handler
+            //app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseAuthentication();
             app.UseAuthorization();

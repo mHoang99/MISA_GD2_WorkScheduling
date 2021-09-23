@@ -16,19 +16,24 @@ export class AuthInterceptorService implements HttpInterceptor {
             .pipe(
                 take(1),
                 exhaustMap(user => {
+                    //Clone request 
                     let modifiedReq = req.clone(
                         {
+                            //Thêm auth vào header
                             headers: req.headers.append(
                                 'Authorization',
                                 user?.accessToken
                                     ? `Bearer ${user.accessToken}`
                                     : ""
                             ),
+                            //Thay url 
                             url: `${this.baseUrl}${req.url}`
                         });
                     return next.handle(modifiedReq).pipe(
                         tap(event => {
+                            //Response
                             if (event.type === HttpEventType.Response) {
+                                //Nếu unauthorized thì logout
                                 if (event.status === 401) {
                                     this.authService.logout();
                                 }

@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace MISA.ApplicationCore.Models
 {
+    /// <summary>
+    /// Model cho bảng event
+    /// </summary>
+    /// CREATED_BY: vmhoang
     public class Event : BaseModel
     {
         [PrimaryKey]

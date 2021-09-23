@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace MISA.WorkScheduling.API.Models.Requests
 {
+    /// <summary>
+    /// Request body khi refresh token
+    /// </summary>
+    /// CREATED_BY: vmhoang
     public class RefreshTokenRequest
     {
-        [Required]
         public string RefreshToken { get; set; }
     }
 }

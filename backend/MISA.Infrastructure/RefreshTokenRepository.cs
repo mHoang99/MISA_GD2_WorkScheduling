@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace MISA.Infrastructure
 {
-    public class AuthRepository : BaseRepository<RefreshToken>, IAuthRepository
+    public class RefreshTokenRepository : BaseRepository<RefreshToken>, IRefreshTokenRepository
     {
-        public AuthRepository(IDBContext dbContext) : base(dbContext)
+        public RefreshTokenRepository(IDBContext dbContext) : base(dbContext)
         {
         }
 
@@ -30,7 +30,7 @@ namespace MISA.Infrastructure
 
                     parameters.Add($"@UserId", userId, DbType.String);
 
-                    //Thực thi commandText
+                    //Thực thi procedure
                     rowsAffected = await _dbConnection.ExecuteAsync($"Proc_Delete{_tableName}ByUserId", parameters, commandType: CommandType.StoredProcedure, transaction: transaction);
 
                     transaction.Commit();

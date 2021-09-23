@@ -11,15 +11,21 @@ using System.Threading.Tasks;
 
 namespace MISA.WorkScheduling.API.Authentication.JWT
 {
+    /// <summary>
+    /// Class tạo JWT token
+    /// </summary>
+    /// CREATED_BY: vmhoang
     public abstract class TokenGenerator
     {
-
+        #region Fields
         protected string jwtSecret;
         protected string jwtIssuer;
         protected string jwtAudience;
         protected string jwtTokenExpirationMinutes;
         protected bool jwtHasClaims = true;
+        #endregion
 
+        #region Constructor
         protected TokenGenerator(
             string cjwtSecret, string cjwtIssuer, string cjwtAudience, string cjwtTokenExpirationMinutes, bool cjwtHasClaims)
         {
@@ -29,23 +35,26 @@ namespace MISA.WorkScheduling.API.Authentication.JWT
             jwtTokenExpirationMinutes = cjwtTokenExpirationMinutes;
             jwtHasClaims = cjwtHasClaims;
         }
+        #endregion
 
-
-
+        #region Methods
+        /// <summary>
+        /// Tạo token mới
+        /// </summary>
+        /// <param name="userInfo">User dùng để đưa thông tin vào token</param>
+        /// <returns>token string</returns>
         public string GenerateToken(User userInfo = null)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            //claim is used to add identity to JWT token
+            //add identity to JWT token
             var claims = new[] {
                     new Claim(JwtRegisteredClaimNames.Sub, (userInfo?.Username)??""),
                     new Claim("id", (userInfo?.UserId.ToString())??""),
                     new Claim("date", DateTime.Now.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
-
-
 
             var token = new JwtSecurityToken(
               jwtIssuer,
@@ -58,5 +67,6 @@ namespace MISA.WorkScheduling.API.Authentication.JWT
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        #endregion
     }
 }

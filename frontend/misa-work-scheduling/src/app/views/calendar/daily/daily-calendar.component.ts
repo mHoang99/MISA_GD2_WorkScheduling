@@ -19,9 +19,9 @@ export class DailyCalendarViewComponent {
         stickyHeaderDates: false,
         allDaySlot: false,
         headerToolbar: {
-            start: 'title', // will normally be on the left. if RTL, will be on the right
+            start: 'title', 
             center: '',
-            end: 'today prev,next' // will normally be on the right. if RTL, will be on the left
+            end: 'today prev,next'
         },
 
         dayHeaders: true,
@@ -35,9 +35,8 @@ export class DailyCalendarViewComponent {
             omitCommas: true
         },
 
+        //Danh sách các sự kiện
         eventSources: [
-
-            // your event source
             {
               events: [ // put the array in the `events` property
                 {
@@ -63,6 +62,7 @@ export class DailyCalendarViewComponent {
         slotDuration: "00:15:00",
         slotMinTime: "09:00:00",
         slotMaxTime: "18:00:01",
+
         slotLabelFormat: {
             hour: 'numeric',
             minute: '2-digit',
@@ -70,6 +70,7 @@ export class DailyCalendarViewComponent {
             meridiem: 'short',
             hour12: false,
         },
+
         buttonText: {
             today: 'Hôm nay',
             month: 'Tháng',
@@ -86,8 +87,10 @@ export class DailyCalendarViewComponent {
     }
 
     ngAfterViewInit() {
+        //Lấy api của full calendar
         this.calendarApi = this.calendar.getApi();
 
+        //Chuyển tới ngày theo yêu cầu
         if (history.state.data?.date) {
             this.calendarApi.gotoDate(history.state.data.date);
         }

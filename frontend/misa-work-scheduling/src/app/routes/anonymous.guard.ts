@@ -4,6 +4,9 @@ import { Observable } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { AuthService } from "../services/auth/auth.service";
 
+/**
+ * Guard cho các route yêu cầu là anonymous
+ */
 @Injectable({ providedIn: 'root' })
 export class AnonymousGuard implements CanActivate {
 

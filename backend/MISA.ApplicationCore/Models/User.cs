@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace MISA.ApplicationCore.Entities
 {
+    /// <summary>
+    /// Model cho bảng user
+    /// </summary>
+    /// CREATED_BY: vmhoang
     public class User : BaseModel
     {
         [PrimaryKey]

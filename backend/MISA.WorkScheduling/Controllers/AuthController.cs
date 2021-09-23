@@ -48,46 +48,60 @@ namespace MISA.WorkScheduling.API.Controllers
             _refreshTokenValidator = refreshTokenValidator;
         }
 
+        /// <summary>
+        /// Xác thực
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("login")]
         async public Task<IActionResult> Authenticate([FromBody] UserLoginModel entity)
         {
+            //Gọi service xác thực tài khoản
             var response = await _authService.Authenticate(entity);
 
+            //Tài khoản hợp lệ
             if (response.SuccessState)
             {
                 var user = response.Data as User;
 
+                //Tạo token mới từ user nhận được
                 var tokenString = _accessTokenGenerator.GenerateToken(user);
                 var refreshTokenString = _refreshTokenGenerator.GenerateToken();
 
+                //Lưu refresh token
                 var addRes = await _authService.AddRefreshToken(refreshTokenString, user.UserId);
 
                 if (addRes.SuccessState)
+                {
                     return Ok(new
                     {
                         user = user,
                         accessToken = tokenString,
                         refreshToken = refreshTokenString
                     });
+                }
                 else
                 {
                     return StatusCode(500, addRes.ConvertToApiReturn());
                 }
             }
+            //Tài khoản không hợp lệ
             else
             {
                 return Ok(response.ConvertToApiReturn());
             }
         }
 
+        /// <summary>
+        /// Lấy access token mới
+        /// </summary>
+        /// <param name="refreshRequest"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("refresh")]
         async public Task<IActionResult> Refresh([FromBody] RefreshTokenRequest refreshRequest)
         {
-
-            var reqUserId = HttpContext.User.FindFirst("id").Value;
-
             //Validate refresh token
             bool isValidRefreshToken = _refreshTokenValidator.Validate(refreshRequest.RefreshToken);
             if (!isValidRefreshToken)
@@ -95,29 +109,39 @@ namespace MISA.WorkScheduling.API.Controllers
                 return BadRequest();
             }
 
-            //TODO: Tìm user tương ứng + tạo token mới
+            //Lấy thông tin user tương ứng với token
             var serviceRes = await _authService.getRefreshTokenOwner(refreshRequest.RefreshToken);
-
-            if(!serviceRes.SuccessState)
+            
+            if (!serviceRes.SuccessState)
             {
-                return BadRequest();
+                return Unauthorized();
             }
-        
+
+            //Trả về token mới
             return Ok(new { AccessToken = _accessTokenGenerator.GenerateToken(serviceRes.Data as User) });
         }
 
+        /// <summary>
+        /// Thoát đăng nhập
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpPost("logout")]
         async public Task<IActionResult> Logout()
         {
+            //Lấy UserId từ trong request
             var userId = HttpContext.User.FindFirst("id").Value;
 
-            //TODO: Xóa hết refresh token tương ứng vs id trong db
-            var res = await _authService.DeleteByUserId(userId);
+            //Xóa hết refresh token tương ứng vs id trong db
+            var res = await _authService.DeleteRefreshTokenByUserId(userId);
 
             return Ok(res);
         }
 
+        /// <summary>
+        /// Lấy ra user tương ứng với access token hiện tại
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         async public Task<IActionResult> Get()

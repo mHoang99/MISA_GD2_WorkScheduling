@@ -9,25 +9,28 @@ import { AuthService } from "../../services/auth/auth.service";
     styleUrls: ["./auth.component.scss"]
 })
 export class AuthComponent {
-    isLoginMode = true;
     isLoading = false;
     error:string = "";
 
     constructor(private authService: AuthService, private router: Router) { }
 
-    onSwitchMode() {
-        this.isLoginMode = !this.isLoginMode;
-    }
-
+    /**
+     * Handle sự kiện form submit
+     * @param form 
+     * @returns 
+     */
     onSubmit(form: NgForm) {
+        //Kiểm tra form valid
         if (!form.valid) {
             return;
         }
+
         const username = form.value.username;
         const password = form.value.password;
 
         this.isLoading = true;
 
+        //Gọi api login từ service 
         this.authService.login(username, password).subscribe(
             resData => {
                 console.log(resData);
@@ -36,17 +39,17 @@ export class AuthComponent {
                     this.error = resData['userMsg']
                 }
                 else {
-                    this.router.navigate([''])
+                    this.router.navigate(['/calendar'])
                 }
             },
             error => {
                 console.log(error);
                 this.error = error
                 this.isLoading = false;
-            }
+            },
         );
 
+        //reset lại form
         form.reset();
-        this.router.navigate(['calendar'])
     }
 }

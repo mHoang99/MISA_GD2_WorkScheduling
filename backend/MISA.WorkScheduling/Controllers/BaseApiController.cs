@@ -18,7 +18,7 @@ namespace MISA.WorkScheduling.API
     /// <summary>
     /// Base Api controller 
     /// </summary>
-    /// CREATED_BY: vmhoang (27/07/2021)
+    /// CREATED_BY: vmhoang
     [Route("api/[controller]s")]
     [ApiController]
     [EnableCors("MyPolicy")]
@@ -43,7 +43,7 @@ namespace MISA.WorkScheduling.API
         /// Lấy tất cả 
         /// </summary>
         /// <returns></returns>
-        /// CREATED_BY: vmhoang (27/07/2021)
+        /// CREATED_BY: vmhoang
         [HttpGet]
         async public Task<IActionResult> Get()
         {
@@ -64,7 +64,7 @@ namespace MISA.WorkScheduling.API
         /// </summary>
         /// <param name="id">Id của bản ghi</param>
         /// <returns></returns>
-        /// CREATED_BY: vmhoang (27/07/2021)
+        /// CREATED_BY: vmhoang
         [HttpGet("{id}")]
         async public Task<IActionResult> Get(string id)
         {
@@ -85,7 +85,7 @@ namespace MISA.WorkScheduling.API
         /// </summary>
         /// <param name="entity">Dữ liệu cần thêm mới</param>
         /// <returns></returns>
-        /// CREATED_BY: vmhoang (27/07/2021)
+        /// CREATED_BY: vmhoang
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] T entity)
         {
@@ -107,7 +107,7 @@ namespace MISA.WorkScheduling.API
         /// <param name="id">Id của bản ghi</param>
         /// <param name="entity">Dữ liệu cần sửa</param>
         /// <returns></returns>
-        /// CREATED_BY: vmhoang (27/07/2021)
+        /// CREATED_BY: vmhoang
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(string id, [FromBody] T entity)
         {
@@ -128,7 +128,7 @@ namespace MISA.WorkScheduling.API
         /// </summary>
         /// <param name="id">Id của bản ghi</param>
         /// <returns></returns>
-        /// CREATED_BY: vmhoang (27/07/2021)
+        /// CREATED_BY: vmhoang
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {

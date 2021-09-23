@@ -10,18 +10,21 @@ import { AnonymousGuard } from './anonymous.guard';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'auth', component: AuthComponent, canActivate: [AnonymousGuard]},
-    { path: 'calendar', canActivate: [AuthGuard], component: CalendarViewComponent, children: [
-        {
-            path:'',
-            redirectTo: 'daily',
-            pathMatch: 'full' 
-        },
-        {path: 'monthly', component: MonthlyCalendarViewComponent},
-        {path: 'weekly', component: WeeklyCalendarViewComponent},
-        {path: 'daily', component: DailyCalendarViewComponent}
-    ]},
+    { path: '', component: HomeComponent, pathMatch: 'full' },
+    { path: 'auth', component: AuthComponent, canActivate: [AnonymousGuard] },
+    {
+        path: 'calendar', canActivate: [AuthGuard], component: CalendarViewComponent, children: [
+            {
+                path: '',
+                redirectTo: 'daily',
+                pathMatch: 'full'
+            },
+            { path: 'monthly', component: MonthlyCalendarViewComponent },
+            { path: 'weekly', component: WeeklyCalendarViewComponent },
+            { path: 'daily', component: DailyCalendarViewComponent }
+        ]
+    },
+    {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

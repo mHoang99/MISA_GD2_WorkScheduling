@@ -17,10 +17,10 @@ namespace MISA.ApplicationCore.Authentication
     {
         private IBaseRepository<User> _userRepository;
 
-        private new IAuthRepository _repository;
+        private new IRefreshTokenRepository _repository;
 
         public AuthService(
-            IAuthRepository repository,
+            IRefreshTokenRepository repository,
             IBaseRepository<User> userRepo
             )
             : base(repository)
@@ -103,7 +103,7 @@ namespace MISA.ApplicationCore.Authentication
             }
         }
 
-        async public Task<ServiceResult> DeleteByUserId(string userId)
+        async public Task<ServiceResult> DeleteRefreshTokenByUserId(string userId)
         {
             try
             {
@@ -141,9 +141,9 @@ namespace MISA.ApplicationCore.Authentication
                     HashedValue = Hasher.Sha256Hash(refreshTokenString)
                 };
 
-                var userIdProperty = tmpToken.GetType().GetProperty("UserId");
+                var hashedValueProperty = tmpToken.GetType().GetProperty("HashedValue");
 
-                var currentToken = await _repository.GetEntityByProperty(tmpToken, userIdProperty);
+                var currentToken = await _repository.GetEntityByProperty(tmpToken, hashedValueProperty);
 
                 if (currentToken == null)
                 {

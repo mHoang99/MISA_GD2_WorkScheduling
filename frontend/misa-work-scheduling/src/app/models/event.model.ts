@@ -1,5 +1,3 @@
-import * as internal from "stream";
-
 export class CalendarEvent {
     constructor(
         public eventId: string,

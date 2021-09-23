@@ -14,9 +14,9 @@ export class MonthlyCalendarViewComponent {
         height: "100%",
         stickyHeaderDates: false,
         headerToolbar: {
-            start: 'title', // will normally be on the left. if RTL, will be on the right
+            start: 'title',
             center: '',
-            end: 'today prev,next' // will normally be on the right. if RTL, will be on the left
+            end: 'today prev,next'
         },
         titleFormat: {
             year: 'numeric',
@@ -32,10 +32,12 @@ export class MonthlyCalendarViewComponent {
         showNonCurrentDates: true,
 
         selectable: true,
+
+        /**
+         * Hàm xử lý khi bấm vào 1 ô ngày trong lịch
+         * @param info 
+         */
         dateClick: (info) => {
-            alert('Clicked on: ' + info.dateStr);
-            alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-            alert('Current view: ' + info.view.type);
             // info.dayEl.style.backgroundColor = 'red';
         },
 
@@ -62,11 +64,19 @@ export class MonthlyCalendarViewComponent {
 
         weekText: "Tuần ",
 
+        /**
+         * Hàm handle bấm vào 1 tuần
+         * @param date 
+         */
         navLinkDayClick: (date) => {
             //navigate sang trang xem theo ngày
             this.router.navigate(["calendar/daily"], { state: { data: { date: date } } });
         },
 
+        /**
+         * Hàm handle bấm vào 1 ngày
+         * @param date 
+         */
         navLinkWeekClick: (date) => {
             //navigate sang trang xem theo tuần
             this.router.navigate(["calendar/weekly"], { state: { data: { date: date } } });

@@ -1,13 +1,15 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { throwError } from "rxjs";
-import { catchError } from 'rxjs/operators';
+import { HttpService } from "./http.service";
 
 
 
-export class EventService {
-    constructor(private http: HttpClient, private router: Router) { }
+export class EventService extends HttpService {
 
     protected defaultPath = "/Events";
+
+    constructor(http: HttpClient, router: Router) {
+        super(http, router);
+    }
 
 }

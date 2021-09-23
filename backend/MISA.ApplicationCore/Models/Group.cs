@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 
 namespace MISA.ApplicationCore.Models
 {
+    /// <summary>
+    /// Model cho bảng group
+    /// </summary>
+    /// CREATED_BY: vmhoang
     class Group : BaseModel
     {
         [PrimaryKey]
         [DisplayName("Khóa chính")]
         public Guid GroupId { get; set; }
+
+        [MaxLength(20)]
+        [DisplayName("Mã khối")]
+        public string GroupCode { get; set; }
 
         [MaxLength(100)]
         [DisplayName("Tên khối")]

@@ -13,7 +13,7 @@ namespace MISA.Infrastructure.Database
     /// Class quản lý connection
     /// </summary>
     /// CREATED_BY: vmhoang (22/07/2021)
-    public class DBContext : IAuthDBContext
+    public class DBContext : IDBContext
     {
         #region Properties
 

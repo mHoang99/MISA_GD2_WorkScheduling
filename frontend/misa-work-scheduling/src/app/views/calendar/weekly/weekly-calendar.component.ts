@@ -13,23 +13,25 @@ export class WeeklyCalendarViewComponent implements AfterViewInit {
 
     private calendarApi: Calendar;
 
+    //options cho fullcalendar
     calendarOptions: CalendarOptions = {
         initialView: 'timeGridWeek',
         locale: "vi",
         height: "100%",
         stickyHeaderDates: false,
-        allDaySlot: false,
+        allDaySlot: false, //Không cho phép hiện ô sự kiện cả ngày
         headerToolbar: {
-            start: 'title', // will normally be on the left. if RTL, will be on the right
+            start: 'title', 
             center: '',
-            end: 'today prev,next' // will normally be on the right. if RTL, will be on the left
-        },
+            end: 'today prev,next' 
+        }, //Thanh toolbar
+
         titleFormat: {
             year: 'numeric',
             month: '2-digit'
-        },
+        }, //Format tiêu đề của lịch
 
-        nowIndicator: true,
+        nowIndicator: true, 
 
         dayHeaderFormat: {
             weekday: 'narrow',
@@ -38,9 +40,9 @@ export class WeeklyCalendarViewComponent implements AfterViewInit {
             omitCommas: true
         },
 
-        slotDuration: "00:15:00",
-        slotMinTime: "09:00:00",
-        slotMaxTime: "18:00:01",
+        slotDuration: "00:15:00", //Khoảng cách giữa 2 mốc thời gian
+        slotMinTime: "09:00:00", //Thời gian bắt đầu
+        slotMaxTime: "18:00:01", //Thời gian kết thúc
         slotLabelFormat: {
             hour: 'numeric',
             minute: '2-digit',
@@ -69,24 +71,26 @@ export class WeeklyCalendarViewComponent implements AfterViewInit {
     constructor(
         private route: ActivatedRoute
     ) {
-        console.log(this.route.data)
+        // console.log(this.route.data)
     }
 
     ngAfterViewInit() {
+        //Lấy các api được full calendar hỗ trợ
         this.calendarApi = this.calendar.getApi();
 
+        //Di chuyển tới ngày được yêu cầu
         if (history.state.data?.date) {
             this.calendarApi.gotoDate(history.state.data.date);
         }
 
-        this.calendarApi.addEvent({
-            event: {
-                id: 'a',
-                title: 'Di choi',
-                start: new Date(),
-                end: new Date(new Date().getTime() + 100000)
-            }
-        })
+        // this.calendarApi.addEvent({
+        //     event: {
+        //         id: 'a',
+        //         title: 'Di choi',
+        //         start: new Date(),
+        //         end: new Date(new Date().getTime() + 100000)
+        //     }
+        // })
     }
 
 }

@@ -9,7 +9,7 @@ namespace MISA.ApplicationCore.Enums
     /// <summary>
     /// Trạng thái của entity
     /// </summary>
-    /// CREATEDBY: VMHOANG (25/07/2021)
+    /// CREATEDBY: VMHOANG
     public enum EntityState
     {
         GET = 0,
@@ -17,12 +17,21 @@ namespace MISA.ApplicationCore.Enums
         UPDATE = 2,
         REMOVE = 3
     }
+
+    /// <summary>
+    /// Giới tính
+    /// </summary>
+    /// CREATEDBY: VMHOANG
     public enum Gender
     {
         MALE = 1,
         FEMALE = 0
     }
 
+    /// <summary>
+    /// Trạng thái của event lịch
+    /// </summary>
+    /// CREATEDBY: VMHOANG
     public enum EventState
     {
         WAITING = 0,

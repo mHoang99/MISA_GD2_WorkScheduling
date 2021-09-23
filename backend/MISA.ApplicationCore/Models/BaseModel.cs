@@ -12,7 +12,7 @@ namespace MISA.ApplicationCore.Models
     /// <summary>
     /// Class Attribute cho trường bắt buộc
     /// </summary>
-    /// CREATEDBY: VMHOANG (10/08/2021)
+    /// CREATEDBY: VMHOANG
     [AttributeUsage(AttributeTargets.Property)]
     public class Required : Attribute
     {
@@ -22,7 +22,7 @@ namespace MISA.ApplicationCore.Models
     /// <summary>
     /// Class Attribute cho trường không được phép trùng
     /// </summary>
-    /// CREATEDBY: VMHOANG (10/08/2021)
+    /// CREATEDBY: VMHOANG
     [AttributeUsage(AttributeTargets.Property)]
     public class Unique : Attribute
     {
@@ -32,7 +32,7 @@ namespace MISA.ApplicationCore.Models
     /// <summary>
     /// Class Attribute cho trường khóa chính
     /// </summary>
-    /// CREATEDBY: VMHOANG (10/08/2021)
+    /// CREATEDBY: VMHOANG
     [AttributeUsage(AttributeTargets.Property)]
     public class PrimaryKey : Attribute
     {
@@ -42,7 +42,7 @@ namespace MISA.ApplicationCore.Models
     /// <summary>
     /// Class Attribute cho trường là email
     /// </summary>
-    /// CREATEDBY: VMHOANG (10/08/2021)
+    /// CREATEDBY: VMHOANG
     [AttributeUsage(AttributeTargets.Property)]
     public class Email : Attribute
     {
@@ -51,7 +51,7 @@ namespace MISA.ApplicationCore.Models
     /// <summary>
     /// Class Attribute cho trường số điện thoại
     /// </summary>
-    /// CREATEDBY: VMHOANG (10/08/2021)
+    /// CREATEDBY: VMHOANG
     [AttributeUsage(AttributeTargets.Property)]
     public class PhoneNumber : Attribute
     {
@@ -61,7 +61,7 @@ namespace MISA.ApplicationCore.Models
     /// <summary>
     /// Class Attribute cho trường có độ dài tối đa
     /// </summary>
-    /// CREATEDBY: VMHOANG (10/08/2021)
+    /// CREATEDBY: VMHOANG
     [AttributeUsage(AttributeTargets.Property)]
     public class MaxLength: Attribute
     {

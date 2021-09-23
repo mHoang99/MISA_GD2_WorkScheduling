@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace MISA.WorkScheduling.API.Authentication.JWT
 {
+    /// <summary>
+    /// Class tạo access token
+    /// </summary>
+    /// CREATED_BY: vmhoang
     public class AccessTokenGenerator : TokenGenerator
     {
         public AccessTokenGenerator(IConfiguration config) : base(
