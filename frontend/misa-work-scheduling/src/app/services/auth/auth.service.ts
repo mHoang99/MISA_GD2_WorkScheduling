@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import jwtDecode from "jwt-decode";
 import { BehaviorSubject, throwError } from "rxjs";
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { User } from "src/app/models/user.model";
 
 /**
@@ -13,7 +13,8 @@ interface AuthResponseData {
     user: {
         email: string,
         userId: string,
-        username: string
+        username: string,
+        employeeId: string,
         avatar: string
     };
     accessToken: string,
@@ -56,6 +57,7 @@ export class AuthService {
                             resData.user.email,
                             resData.user.userId,
                             resData.user.username,
+                            resData.user.employeeId,
                             resData.user.avatar,
                             resData.accessToken,
                             resData.refreshToken,
@@ -82,6 +84,7 @@ export class AuthService {
             userData['email'],
             userData['userId'],
             userData['username'],
+            userData['employeeId'],
             userData['avatar'],
             userData['_accessToken'],
             new Date(userData['_accessTokenExpDate']),
@@ -142,9 +145,10 @@ export class AuthService {
 
                     this.handleAuthentication(
                         userData.email,
-                        userData.userId,
+                        userData.id,
                         userData.username,
-                        userData.avatar ?? "",
+                        userData.employeeId,
+                        userData.avatar,
                         resData.accessToken,
                         userData._refreshToken,
                     );
@@ -227,6 +231,7 @@ export class AuthService {
         email: string,
         userId: string,
         username: string,
+        employeeId: string,
         avatar: string,
         accessToken: string,
         refreshToken: string
@@ -247,7 +252,7 @@ export class AuthService {
         const refreshTokenExpDate = new Date(refreshExpiresTime)
 
         //Tạo user mới dựa trên thông tin ở trên
-        const user = new User(email, userId, username, avatar, accessToken, accessTokenExpDate, refreshToken, refreshTokenExpDate);
+        const user = new User(email, userId, username, employeeId, avatar, accessToken, accessTokenExpDate, refreshToken, refreshTokenExpDate);
 
         //Set người dùng mới
         this.user.next(user);

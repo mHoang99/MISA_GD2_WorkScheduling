@@ -81,7 +81,7 @@ namespace MISA.ApplicationCore.Models
     {
         #region Properties
         [JsonIgnore]
-        public EntityState EntityState { get; set; } = EntityState.ADD;
+        public EntityState EntityState { get; set; } = EntityState.GET;
         /// <summary>
         /// Ngày tạo
         /// </summary>

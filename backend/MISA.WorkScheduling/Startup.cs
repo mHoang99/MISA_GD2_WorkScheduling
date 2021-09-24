@@ -100,7 +100,7 @@ namespace MISA.WorkScheduling
             app.UseCors();
 
             // global error handler
-            //app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseAuthentication();
             app.UseAuthorization();

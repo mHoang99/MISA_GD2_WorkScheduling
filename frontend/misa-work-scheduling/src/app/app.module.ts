@@ -23,6 +23,8 @@ import { MonthlyCalendarViewComponent } from './views/calendar/monthly/monthly-c
 import { CalendarViewComponent } from './views/calendar/calendar.component';
 import { WeeklyCalendarViewComponent } from './views/calendar/weekly/weekly-calendar.component';
 import { DailyCalendarViewComponent } from './views/calendar/daily/daily-calendar.component';
+import { ModalComponent } from './components/base/modal/modal.component';
+import { CalendarAddFormComponent } from './views/calendar/add-form/add-form.component';
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -42,7 +44,9 @@ FullCalendarModule.registerPlugins([
         MonthlyCalendarViewComponent,
         WeeklyCalendarViewComponent,
         DailyCalendarViewComponent,
-        CalendarViewComponent
+        CalendarViewComponent,
+        CalendarAddFormComponent,
+        ModalComponent
     ],
     imports: [
         BrowserModule,

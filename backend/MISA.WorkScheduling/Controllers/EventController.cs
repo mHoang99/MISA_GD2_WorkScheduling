@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MISA.ApplicationCore.Helpers;
 using MISA.ApplicationCore.Interfaces;
@@ -14,6 +15,7 @@ namespace MISA.WorkScheduling.API.Controllers
     /// API Controller cho sự kiện lịch
     /// </summary>
     /// CREATED_BY: vmhoang
+    [EnableCors("MyPolicy")]
     public class EventController : BaseApiController<Event>
     {
         private new IEventService _service;
@@ -43,7 +45,7 @@ namespace MISA.WorkScheduling.API.Controllers
             }
             else
             {
-                return BadRequest(res.ConvertToApiReturn());
+                return Unauthorized(res.ConvertToApiReturn());
             }
         }
     }

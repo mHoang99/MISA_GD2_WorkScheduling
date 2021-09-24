@@ -52,6 +52,7 @@ namespace MISA.WorkScheduling.API.Authentication.JWT
             var claims = new[] {
                     new Claim(JwtRegisteredClaimNames.Sub, (userInfo?.Username)??""),
                     new Claim("id", (userInfo?.UserId.ToString())??""),
+                    new Claim("employeeId", (userInfo?.EmployeeId.ToString())??""),
                     new Claim("date", DateTime.Now.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };

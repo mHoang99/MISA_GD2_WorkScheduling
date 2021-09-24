@@ -1,38 +1,29 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Calendar, CalendarOptions, FullCalendarComponent } from "@fullcalendar/angular";
+import { BaseCalendarView, DEFAULT_CALENDAR_OPTIONS } from "../base-calendar-view";
+import { CalendarService } from "../calendar.service";
 
 @Component({
     selector: "app-weekly-calendar-view",
     templateUrl: "./weekly-calendar.component.html",
     styleUrls: ["./weekly-calendar.component.scss"]
 })
-export class WeeklyCalendarViewComponent implements AfterViewInit {
+export class WeeklyCalendarViewComponent extends BaseCalendarView implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('calendar', { static: true }) calendar: FullCalendarComponent;
 
-    private calendarApi: Calendar;
-
     //options cho fullcalendar
     calendarOptions: CalendarOptions = {
+        ...DEFAULT_CALENDAR_OPTIONS,
         initialView: 'timeGridWeek',
-        locale: "vi",
-        height: "100%",
-        stickyHeaderDates: false,
+
         allDaySlot: false, //Không cho phép hiện ô sự kiện cả ngày
-        headerToolbar: {
-            start: 'title', 
-            center: '',
-            end: 'today prev,next' 
-        }, //Thanh toolbar
+        
+        weekText: "T",
 
-        titleFormat: {
-            year: 'numeric',
-            month: '2-digit'
-        }, //Format tiêu đề của lịch
-
-        nowIndicator: true, 
-
+        navLinks: true,
+        
         dayHeaderFormat: {
             weekday: 'narrow',
             month: 'numeric',
@@ -40,57 +31,38 @@ export class WeeklyCalendarViewComponent implements AfterViewInit {
             omitCommas: true
         },
 
-        slotDuration: "00:15:00", //Khoảng cách giữa 2 mốc thời gian
-        slotMinTime: "09:00:00", //Thời gian bắt đầu
-        slotMaxTime: "18:00:01", //Thời gian kết thúc
-        slotLabelFormat: {
-            hour: 'numeric',
-            minute: '2-digit',
-            omitZeroMinute: false,
-            meridiem: 'short',
-            hour12: false,
-        },
-        buttonText: {
-            today: 'Hôm nay',
-            month: 'Tháng',
-            week: 'Tuần',
-            day: 'Ngày',
-            list: 'Danh sách'
-        },
-        events: [
-            {
-                title: 'dynamic event',
-                start: new Date(),
-                allDay: true
-            }
-        ]
-
+         /**
+         * Hàm handle bấm vào 1 tuần
+         * @param date 
+         */
+          navLinkDayClick: (date) => {
+            //navigate sang trang xem theo ngày
+            this.router.navigate(["calendar/daily"], { state: { data: { date: date } } });
+        },        
     };
 
 
-    constructor(
-        private route: ActivatedRoute
-    ) {
-        // console.log(this.route.data)
+    constructor(private router: Router, calendarService: CalendarService) {
+        super(calendarService);
+    }
+
+    ngOnInit() {
     }
 
     ngAfterViewInit() {
-        //Lấy các api được full calendar hỗ trợ
+        //Lấy api của full calendar
         this.calendarApi = this.calendar.getApi();
 
-        //Di chuyển tới ngày được yêu cầu
+        //Chuyển tới ngày theo yêu cầu
         if (history.state.data?.date) {
             this.calendarApi.gotoDate(history.state.data.date);
         }
 
-        // this.calendarApi.addEvent({
-        //     event: {
-        //         id: 'a',
-        //         title: 'Di choi',
-        //         start: new Date(),
-        //         end: new Date(new Date().getTime() + 100000)
-        //     }
-        // })
+        this.setupEventSources();
+    }
+
+    ngOnDestroy() {
+        this.eventSrcSub.unsubscribe();
     }
 
 }

@@ -1,4 +1,9 @@
 <div>
-    CALENDAR
+    <div>Kế hoạch làm việc</div>
+    <app-calendar-add-form [isShow]='isAddFormShow' (isShowChange)="isAddFormShowChange($event)"></app-calendar-add-form>
+    <div>
+        <button>Thêm sự kiện</button>
+    </div>
     <router-outlet></router-outlet>
+
 </div>

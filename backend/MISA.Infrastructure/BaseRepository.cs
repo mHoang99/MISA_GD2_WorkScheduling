@@ -124,12 +124,10 @@ namespace MISA.Infrastructure
             {
                 try
                 {
-                    var parameters = new DynamicParameters();
-
-                    parameters.Add($"@Id", id, DbType.String);
+                    var query = $"DELETE FROM {_tableName} WHERE {_tableName}Id = '{id}'";
 
                     //Thực thi commandText
-                    rowsAffected = await _dbConnection.ExecuteAsync($"Proc_Delete{_tableName}ById", parameters, commandType: CommandType.StoredProcedure, transaction: transaction);
+                    rowsAffected = await _dbConnection.ExecuteAsync(query, commandType: CommandType.Text, transaction: transaction);
 
                     transaction.Commit();
                 }
@@ -151,7 +149,7 @@ namespace MISA.Infrastructure
 
             var query = string.Empty;
 
-            if (entity.EntityState == EntityState.ADD)
+            if (entity.EntityState == EntityState.ADD || entity.EntityState == EntityState.GET)
             {
                 query = $"SELECT * FROM {_tableName} WHERE {propertyName} = '{propertyValue}'";
             }

@@ -154,7 +154,7 @@ namespace MISA.ApplicationCore.Authentication
                     return serviceResult;
                 }
 
-                var user = _userRepository.GetEntityById(currentToken.UserId);
+                var user = await _userRepository.GetEntityById(currentToken.UserId);
                 if (user == null)
                 {
                     //Lỗi

@@ -10,7 +10,7 @@ import { AuthService } from "../../services/auth/auth.service";
 })
 export class AuthComponent {
     isLoading = false;
-    error:string = "";
+    error: string = "";
 
     constructor(private authService: AuthService, private router: Router) { }
 
@@ -35,7 +35,7 @@ export class AuthComponent {
             resData => {
                 console.log(resData);
                 this.isLoading = false;
-                if(!resData.user) {
+                if (!resData.user) {
                     this.error = resData['userMsg']
                 }
                 else {

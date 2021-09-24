@@ -3,6 +3,7 @@ export class User {
         public email: string,
         public id: string,
         public username: string,
+        public employeeId: string,
         public avatar: string,
         private _accessToken: string,
         private _accessTokenExpDate: Date,

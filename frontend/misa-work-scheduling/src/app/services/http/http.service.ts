@@ -53,7 +53,7 @@ export class HttpService {
     post(body: {}) {
         return this.http
             .post(
-                this.defaultPath + '/post',
+                this.defaultPath,
                 body
             )
             .pipe(

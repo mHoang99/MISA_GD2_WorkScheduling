@@ -1,35 +1,23 @@
-import { Component } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { CalendarOptions } from "@fullcalendar/angular";
+import { Calendar, CalendarOptions, FullCalendarComponent } from "@fullcalendar/angular";
+import { BaseCalendarView, DEFAULT_CALENDAR_OPTIONS } from "../base-calendar-view";
+import { CalendarService, EventSource } from "../calendar.service";
 
 @Component({
     selector: "app-monthly-calendar-view",
     templateUrl: "./monthly-calendar.component.html",
     styleUrls: ["./monthly-calendar.component.scss"]
 })
-export class MonthlyCalendarViewComponent {
+export class MonthlyCalendarViewComponent extends BaseCalendarView implements OnInit, AfterViewInit, OnDestroy {
+    @ViewChild('calendar', { static: true }) calendar: FullCalendarComponent;
+
     calendarOptions: CalendarOptions = {
+        ...DEFAULT_CALENDAR_OPTIONS,
+        
         initialView: 'dayGridMonth',
-        locale: 'vi',
-        height: "100%",
+
         stickyHeaderDates: false,
-        headerToolbar: {
-            start: 'title',
-            center: '',
-            end: 'today prev,next'
-        },
-        titleFormat: {
-            year: 'numeric',
-            month: '2-digit'
-        },
-        buttonText: {
-            today: 'Hôm nay',
-            month: 'Tháng',
-            week: 'Tuần',
-            day: 'Ngày',
-            list: 'Danh sách'
-        },
-        showNonCurrentDates: true,
 
         selectable: true,
 
@@ -38,31 +26,11 @@ export class MonthlyCalendarViewComponent {
          * @param info 
          */
         dateClick: (info) => {
-            // info.dayEl.style.backgroundColor = 'red';
         },
-
-        events: [
-            {
-                title: 'event1',
-                start: '2021-09-22'
-            },
-            {
-                title: 'event2',
-                start: '2021-09-22',
-                end: '2021-09-22'
-            },
-            {
-                title: 'event3',
-                start: '2021-09-09T23:30:00',
-                allDay: false // will make the time show
-            }
-        ],
 
         navLinks: true,
 
         weekNumbers: true,
-
-        weekText: "Tuần ",
 
         /**
          * Hàm handle bấm vào 1 tuần
@@ -80,11 +48,35 @@ export class MonthlyCalendarViewComponent {
         navLinkWeekClick: (date) => {
             //navigate sang trang xem theo tuần
             this.router.navigate(["calendar/weekly"], { state: { data: { date: date } } });
+        },
+
+        datesSet: (date) => {
+            console.log(date);
+            this.calendarService.loadEvents();
         }
     };
 
+    constructor(private router: Router, calendarService: CalendarService) {
+        super(calendarService);
+    }
 
-    constructor(private router: Router) {
+    ngOnInit() {
 
+    }
+
+    ngAfterViewInit() {
+        //Lấy api của full calendar
+        this.calendarApi = this.calendar.getApi();
+
+        //Chuyển tới ngày theo yêu cầu
+        if (history.state.data?.date) {
+            this.calendarApi.gotoDate(history.state.data.date);
+        }
+
+        this.setupEventSources();
+    }
+
+    ngOnDestroy() {
+        this.eventSrcSub.unsubscribe();
     }
 }

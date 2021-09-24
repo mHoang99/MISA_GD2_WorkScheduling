@@ -6,6 +6,10 @@ import { Component } from "@angular/core";
     styleUrls: ["./calendar.component.scss"]
 })
 export class CalendarViewComponent {
+    isAddFormShow = true;
 
+    isAddFormShowChange(value) {
+        this.isAddFormShow = value;
+    }
 
 }
