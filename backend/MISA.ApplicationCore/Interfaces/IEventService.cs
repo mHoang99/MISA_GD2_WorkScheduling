@@ -21,7 +21,10 @@ namespace MISA.ApplicationCore.Interfaces
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        Task<ServiceResult> GetByEmployeeId(string userId);
-
+        Task<ServiceResult> GetByEmployeeId(string employeeId);
+        Task<ServiceResult> GetPendingByGroupId(string groupId);
+        Task<ServiceResult> RemoveMultiple(IEnumerable<string> ids);
+        Task<ServiceResult> ApproveMultiple(IEnumerable<string> ids, string approverId);
+        Task<ServiceResult> CompleteEvent(string id);
     }
 }

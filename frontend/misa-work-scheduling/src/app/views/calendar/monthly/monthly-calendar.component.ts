@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { Calendar, CalendarOptions, FullCalendarComponent } from "@fullcalendar/angular";
+import { CalendarOptions, FullCalendarComponent } from "@fullcalendar/angular";
 import { BaseCalendarView, DEFAULT_CALENDAR_OPTIONS } from "../base-calendar-view";
-import { CalendarService, EventSource } from "../calendar.service";
+import { CalendarService } from "../calendar.service";
 
 @Component({
     selector: "app-monthly-calendar-view",
@@ -12,25 +12,31 @@ import { CalendarService, EventSource } from "../calendar.service";
 export class MonthlyCalendarViewComponent extends BaseCalendarView implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('calendar', { static: true }) calendar: FullCalendarComponent;
 
+    @Output() eventClick = new EventEmitter();
+
     calendarOptions: CalendarOptions = {
         ...DEFAULT_CALENDAR_OPTIONS,
-        
+
         initialView: 'dayGridMonth',
 
         stickyHeaderDates: false,
 
         selectable: true,
 
-        /**
-         * Hàm xử lý khi bấm vào 1 ô ngày trong lịch
-         * @param info 
-         */
-        dateClick: (info) => {
-        },
-
         navLinks: true,
 
         weekNumbers: true,
+
+        eventDisplay: "list-item",
+
+        /**
+         * Hàm xử lý khi bấm vào 1 event
+         * @param info 
+         */
+        eventClick: (info) => {
+            console.log(info);
+            this.eventClick.emit(info);
+        },
 
         /**
          * Hàm handle bấm vào 1 tuần
@@ -51,7 +57,6 @@ export class MonthlyCalendarViewComponent extends BaseCalendarView implements On
         },
 
         datesSet: (date) => {
-            console.log(date);
             this.calendarService.loadEvents();
         }
     };
@@ -61,7 +66,6 @@ export class MonthlyCalendarViewComponent extends BaseCalendarView implements On
     }
 
     ngOnInit() {
-
     }
 
     ngAfterViewInit() {

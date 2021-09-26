@@ -5,6 +5,7 @@ import { CalendarViewComponent } from '../views/calendar/calendar.component';
 import { DailyCalendarViewComponent } from '../views/calendar/daily/daily-calendar.component';
 import { MonthlyCalendarViewComponent } from '../views/calendar/monthly/monthly-calendar.component';
 import { WeeklyCalendarViewComponent } from '../views/calendar/weekly/weekly-calendar.component';
+import { PendingViewComponent } from '../views/pending/pending.component';
 import { HomeComponent } from '../views/home/home.component';
 import { AnonymousGuard } from './anonymous.guard';
 import { AuthGuard } from './auth.guard';
@@ -24,7 +25,14 @@ const routes: Routes = [
             { path: 'daily', component: DailyCalendarViewComponent }
         ]
     },
-    {path: '**', redirectTo: ''}
+    {
+        path: 'pending', component: PendingViewComponent,
+        canActivate: [AuthGuard],
+        data: {
+            role: '1'
+        }
+    },
+    { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

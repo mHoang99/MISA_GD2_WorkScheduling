@@ -1,4 +1,5 @@
-﻿using MISA.ApplicationCore.Models;
+﻿using MISA.ApplicationCore.Enums;
+using MISA.ApplicationCore.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,5 +36,7 @@ namespace MISA.ApplicationCore.Entities
         [Unique]
         [DisplayName("Nhân viên tương ứng")]
         public Guid? EmployeeId { get; set; }
+        [DisplayName("Vai trò")]
+        public Role Role { get; set; }
     }
 }

@@ -45,3 +45,6 @@ D:\Projects\MISA\GD2\backend\MISA.WorkScheduling\obj\Debug\net5.0\MISA.WorkSched
 D:\Projects\MISA\GD2\backend\MISA.WorkScheduling\bin\Debug\net5.0\BCrypt.Net-Next.dll
 D:\Projects\MISA\GD2\backend\MISA.WorkScheduling\obj\Debug\net5.0\MISA.WorkScheduling.API.Properties.Resources.resources
 D:\Projects\MISA\GD2\backend\MISA.WorkScheduling\obj\Debug\net5.0\MISA.WorkScheduling.API.csproj.GenerateResource.cache
+D:\Projects\MISA\GD2\backend\MISA.WorkScheduling\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Projects\MISA\GD2\backend\MISA.WorkScheduling\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Projects\MISA\GD2\backend\MISA.WorkScheduling\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

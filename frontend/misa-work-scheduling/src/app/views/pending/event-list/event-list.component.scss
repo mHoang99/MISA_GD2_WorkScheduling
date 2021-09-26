@@ -1,0 +1,46 @@
+.event-list-container {
+    max-width: 700px;
+    max-height: 700px;
+
+    position: relative;
+
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+    }
+
+    .table-container {
+        overflow: auto;
+        max-height: 600px;
+        max-width: 100%;
+        table {
+            &,
+            td {
+                border: 1px solid #ddd;
+                min-width: 40px;
+            }
+
+            th,
+            td {
+                line-height: 38px;
+            }
+
+            thead {
+                background-color: black;
+                z-index: 3;
+                position: sticky;
+                top: 0;
+                th {
+                    color: white;
+                }
+            }
+            tbody {
+                tr:hover {
+                    background-color: #ddd;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

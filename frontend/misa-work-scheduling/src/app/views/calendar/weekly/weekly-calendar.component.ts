@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Calendar, CalendarOptions, FullCalendarComponent } from "@fullcalendar/angular";
 import { BaseCalendarView, DEFAULT_CALENDAR_OPTIONS } from "../base-calendar-view";
@@ -13,17 +13,19 @@ export class WeeklyCalendarViewComponent extends BaseCalendarView implements OnI
 
     @ViewChild('calendar', { static: true }) calendar: FullCalendarComponent;
 
+    @Output() eventClick = new EventEmitter();
+
     //options cho fullcalendar
     calendarOptions: CalendarOptions = {
         ...DEFAULT_CALENDAR_OPTIONS,
         initialView: 'timeGridWeek',
 
         allDaySlot: false, //Không cho phép hiện ô sự kiện cả ngày
-        
+
         weekText: "T",
 
         navLinks: true,
-        
+
         dayHeaderFormat: {
             weekday: 'narrow',
             month: 'numeric',
@@ -31,14 +33,22 @@ export class WeeklyCalendarViewComponent extends BaseCalendarView implements OnI
             omitCommas: true
         },
 
-         /**
-         * Hàm handle bấm vào 1 tuần
-         * @param date 
-         */
-          navLinkDayClick: (date) => {
+        /**
+        * Hàm handle bấm vào 1 tuần
+        * @param date 
+        */
+        navLinkDayClick: (date) => {
             //navigate sang trang xem theo ngày
             this.router.navigate(["calendar/daily"], { state: { data: { date: date } } });
-        },        
+        },
+
+        /**
+         * Hàm xử lý khi bấm vào 1 event
+         * @param info 
+         */
+         eventClick: (info) => {
+            this.eventClick.emit(info);
+        },
     };
 
 

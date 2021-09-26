@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Calendar, CalendarOptions, FullCalendarComponent } from "@fullcalendar/angular";
 import { Subscription } from "rxjs";
@@ -10,24 +10,34 @@ import { CalendarService, EventSource } from "../calendar.service";
     templateUrl: "./daily-calendar.component.html",
     styleUrls: ["./daily-calendar.component.scss"]
 })
-export class DailyCalendarViewComponent extends BaseCalendarView implements  OnInit, AfterViewInit, OnDestroy {
+export class DailyCalendarViewComponent extends BaseCalendarView implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('calendar', { static: true }) calendar: FullCalendarComponent;
+    
+    @Output() eventClick = new EventEmitter();
 
     calendarOptions: CalendarOptions = {
         ...DEFAULT_CALENDAR_OPTIONS,
         initialView: 'timeGridDay',
         locale: "vi",
         height: "100%",
-       
-        allDaySlot: true,
 
         navLinks: false,
 
         weekText: "T",
 
+        allDaySlot: false,
+
         datesSet: (date) => {
             this.calendarService.loadEvents();
-        }
+        },
+
+        /**
+         * Hàm xử lý khi bấm vào 1 event
+         * @param info 
+         */
+        eventClick: (info) => {
+            this.eventClick.emit(info);
+        },
     };
 
     constructor(private router: Router, calendarService: CalendarService) {
@@ -48,7 +58,7 @@ export class DailyCalendarViewComponent extends BaseCalendarView implements  OnI
 
         this.setupEventSources();
     }
-    
+
     ngOnDestroy() {
         this.eventSrcSub.unsubscribe();
     }

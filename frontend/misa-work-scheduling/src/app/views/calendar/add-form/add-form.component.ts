@@ -36,12 +36,12 @@ export class CalendarAddFormComponent {
         const endTime = form.value.endTime;
 
         let startDateTime = new Date(startDate);
-        startDateTime.setHours(startTime.split(':')[0]);
-        startDateTime.setMinutes(startTime.split(':')[1]);
+        startDateTime.setUTCHours(startTime.split(':')[0]);
+        startDateTime.setUTCMinutes(startTime.split(':')[1]);
 
         let endDateTime = new Date(endDate);
-        endDateTime.setHours(endTime.split(':')[0]);
-        endDateTime.setMinutes(startTime.split(':')[1]);
+        endDateTime.setUTCHours(endTime.split(':')[0]);
+        endDateTime.setUTCMinutes(startTime.split(':')[1]);
 
         console.log(startTime, endTime)
         console.log(startDate, endDate)
@@ -69,7 +69,7 @@ export class CalendarAddFormComponent {
         );
 
         //reset lại form
-        // form.reset();
+        form.reset();
     }
 }
 

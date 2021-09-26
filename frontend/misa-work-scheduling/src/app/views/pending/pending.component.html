@@ -1,0 +1,29 @@
+<div class="view-container">
+    <div class="view-left">
+        <div style="width: 300px; height: 200px;">
+            <app-group-list [groupList]="groupList" (groupSelect)="groupSelect($event)" [isLoading]="groupListLoading"></app-group-list>
+        </div>
+        <div style="height: 400px;">
+            <app-event-card mode="approve" [event]="selectedEvent"></app-event-card>
+        </div>
+    </div>
+    <div class="view-right">
+        <app-pending-event-list 
+        [eventList]="groupEventList" 
+        [isLoading]="eventListLoading"
+        (selectEvent)="eventSelect($event)" 
+        (approveEvent)="eventApprove($event)"
+        (deleteEvent)="eventDelete($event)"
+        (approveMultipleEvents)="multipleEventsApprove($event)"
+        (deleteMultipleEvents)="multipleEventsDelete($event)"
+        >
+        </app-pending-event-list>
+    </div>
+    <app-popup type="confirm" [isShow]="isDeleteOnePopupShow" (closeBtnClick)="isDeleteOnePopupShow = false" (confirmBtnClick)="sendDeleteRequest()" [isLoading]="popupLoading">
+        {{popupMessage}}
+    </app-popup>
+
+    <app-popup type="confirm" [isShow]="isDeleteManyPopupShow" (closeBtnClick)="isDeleteManyPopupShow = false" (confirmBtnClick)="sendDeleteRequest()" [isLoading]="popupLoading">
+        {{popupMessage}}
+    </app-popup>
+</div>

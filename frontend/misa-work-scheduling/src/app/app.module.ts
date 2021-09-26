@@ -25,6 +25,11 @@ import { WeeklyCalendarViewComponent } from './views/calendar/weekly/weekly-cale
 import { DailyCalendarViewComponent } from './views/calendar/daily/daily-calendar.component';
 import { ModalComponent } from './components/base/modal/modal.component';
 import { CalendarAddFormComponent } from './views/calendar/add-form/add-form.component';
+import { PendingViewComponent } from './views/pending/pending.component';
+import { GroupListComponent } from './views/pending/group-list/group-list.component';
+import { PendingEventListComponent } from './views/pending/event-list/event-list.component';
+import { EventDetailsCardComponent } from './components/event-card/event-card.component';
+import { PopupComponent } from './components/base/popup/popup.component';
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -46,6 +51,11 @@ FullCalendarModule.registerPlugins([
         DailyCalendarViewComponent,
         CalendarViewComponent,
         CalendarAddFormComponent,
+        PendingViewComponent,
+        GroupListComponent,
+        EventDetailsCardComponent,
+        PendingEventListComponent,
+        PopupComponent,
         ModalComponent
     ],
     imports: [

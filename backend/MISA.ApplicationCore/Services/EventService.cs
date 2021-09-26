@@ -77,6 +77,35 @@ namespace MISA.ApplicationCore.Services
 
                 var user = await _repository.GetEntitiesByEmployeeId(parsedId);
 
+                serviceResult.SuccessState = true;
+                serviceResult.Data = user;
+
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(
+                    ex.Message,
+                    UnexpectedErrorResponse(ex.Message)
+                );
+            }
+        }
+
+        async public Task<ServiceResult> GetPendingByGroupId(string groupId)
+        {
+            try
+            {
+                //kiểm tra id là guid
+                if (!CheckGuid($"id", groupId))
+                {
+                    return serviceResult;
+                }
+
+                var parsedId = Guid.Parse(groupId);
+
+                serviceResult.SuccessState = true;
+                serviceResult.Data = await _repository.GetPendingEntitiesByGroupId(parsedId);
+
                 return serviceResult;
             }
             catch (Exception ex)
@@ -100,7 +129,8 @@ namespace MISA.ApplicationCore.Services
 
                 var parsedId = Guid.Parse(managerId);
 
-                var user = await _repository.GetEntitiesByManagerId(parsedId);
+                serviceResult.SuccessState = true;
+                serviceResult.Data = await _repository.GetEntitiesByManagerId(parsedId);
 
                 return serviceResult;
             }
@@ -113,6 +143,97 @@ namespace MISA.ApplicationCore.Services
             }
         }
 
+        async public Task<ServiceResult> RemoveMultiple(IEnumerable<string> ids)
+        {
+            try
+            {
 
+                foreach (string id in ids)
+                {
+                    //kiểm tra id là guid
+                    if (!CheckGuid($"id", id))
+                    {
+                        return serviceResult;
+                    }
+                }
+
+                var idsString = string.Join(",", ids);
+
+                serviceResult.SuccessState = true;
+                serviceResult.Data = await _repository.DeleteEntitesByIds(idsString);
+
+
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(
+                    ex.Message,
+                    UnexpectedErrorResponse(ex.Message)
+                );
+            }
+        }
+
+        public async Task<ServiceResult> ApproveMultiple(IEnumerable<string> ids, string approverId)
+        {
+            try
+            {
+                if (!CheckGuid("approverId", approverId))
+                {
+                    return serviceResult;
+                }
+
+                foreach (string id in ids)
+                {
+                    //kiểm tra id là guid
+                    if (!CheckGuid($"id", id))
+                    {
+                        return serviceResult;
+                    }
+                }
+
+                var parsedId = Guid.Parse(approverId);
+
+                var idsString = string.Join(",", ids);
+
+                serviceResult.SuccessState = true;
+                serviceResult.Data = await _repository.ApproveEntitesByIds(idsString, parsedId);
+
+
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(
+                    ex.Message,
+                    UnexpectedErrorResponse(ex.Message)
+                );
+            }
+        }
+
+        public async Task<ServiceResult> CompleteEvent(string id)
+        {
+            try
+            {
+                if (!CheckGuid("id", id))
+                {
+                    return serviceResult;
+                }
+
+                var parsedId = Guid.Parse(id);
+
+                serviceResult.SuccessState = true;
+                serviceResult.Data = await _repository.CompleteById(parsedId);
+
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(
+                    ex.Message,
+                    UnexpectedErrorResponse(ex.Message)
+                );
+            }
+        }
     }
 }

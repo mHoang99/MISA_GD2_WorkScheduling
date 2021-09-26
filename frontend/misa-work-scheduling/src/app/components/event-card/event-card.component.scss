@@ -1,0 +1,9 @@
+.event-card-container {
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    border: 2px solid orange;
+    &>div {
+        height: 100%;
+    }
+}

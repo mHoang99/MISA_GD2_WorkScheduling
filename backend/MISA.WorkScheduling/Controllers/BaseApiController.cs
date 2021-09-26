@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MISA.ApplicationCore.Entities;
 using MISA.ApplicationCore.Enums;
@@ -109,7 +110,8 @@ namespace MISA.WorkScheduling.API
         /// <returns></returns>
         /// CREATED_BY: vmhoang
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(string id, [FromBody] T entity)
+        [Authorize]
+        public async Task<IActionResult> PutAsync([FromRoute(Name = "id")] string id, [FromBody] T entity)
         {
 
             var res = await _service.Update(id, entity);
@@ -130,7 +132,8 @@ namespace MISA.WorkScheduling.API
         /// <returns></returns>
         /// CREATED_BY: vmhoang
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(string id)
+        [Authorize]
+        public async Task<IActionResult> DeleteAsync([FromRoute(Name = "id")] string id)
         {
             var res = await _service.Delete(id);
 

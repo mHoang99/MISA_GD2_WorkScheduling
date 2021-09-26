@@ -11,7 +11,7 @@ namespace MISA.ApplicationCore.Models
     /// Model cho bảng group
     /// </summary>
     /// CREATED_BY: vmhoang
-    class Group : BaseModel
+    public class Group : BaseModel
     {
         [PrimaryKey]
         [DisplayName("Khóa chính")]

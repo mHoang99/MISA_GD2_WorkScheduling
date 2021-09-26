@@ -1,0 +1,13 @@
+<app-modal [isShow]="isShow" [isLoading]="false">
+    <div slot="body">
+        <div>ICON</div>
+        <p>
+            <ng-content></ng-content>
+        </p>
+    </div>
+    <div slot="footer">
+        <button *ngIf="type==='confirm'" (click)="closeBtnClick.emit('')">Hủy</button>
+        <button *ngIf="type==='confirm'" (click)="confirmBtnClick.emit('')">Đồng ý</button>
+        <button *ngIf="type!='confirm'" (click)="closeBtnClick.emit('')">Đóng</button>
+    </div>
+</app-modal>

@@ -1,3 +1,5 @@
+import jwtDecode from "jwt-decode";
+
 export class User {
     constructor(
         public email: string,
@@ -31,5 +33,10 @@ export class User {
     
     get refreshTokenExpDate() {
         return this._refreshTokenExpDate;
+    }
+
+    get role() {
+        let decodedToken = jwtDecode(this._accessToken);
+        return decodedToken['role'];
     }
 }

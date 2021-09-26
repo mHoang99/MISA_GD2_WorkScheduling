@@ -53,6 +53,8 @@ namespace MISA.WorkScheduling.API.Authentication.JWT
                     new Claim(JwtRegisteredClaimNames.Sub, (userInfo?.Username)??""),
                     new Claim("id", (userInfo?.UserId.ToString())??""),
                     new Claim("employeeId", (userInfo?.EmployeeId.ToString())??""),
+                    new Claim(ClaimTypes.Role, ((int) (userInfo?.Role ?? ApplicationCore.Enums.Role.EMPLOYEE)).ToString()),
+                    new Claim("role", ((int) (userInfo?.Role ?? ApplicationCore.Enums.Role.EMPLOYEE)).ToString()),
                     new Claim("date", DateTime.Now.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };

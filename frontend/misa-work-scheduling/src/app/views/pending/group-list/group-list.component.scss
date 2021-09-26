@@ -1,0 +1,50 @@
+.group-list-container {
+    border: 2px solid #cacaca;
+    width: 100%;
+    height: 100%;
+    padding: 8px 0;
+    overflow-y: auto;
+    border-radius: 4px;
+
+    .group-row {
+        display: flex;
+        cursor: pointer;
+        line-height: 38px;
+        padding: 0 16px;
+        gap: 8px;
+        justify-content: space-between;
+        align-items: center;
+
+        &:hover {
+            background-color: #ddd;
+        }
+
+        .group-code {
+            flex-basis: 20%;
+            text-overflow: ellipsis;
+        }
+
+        .group-name {
+            flex: 1;
+            font-weight: 300;
+            text-overflow: ellipsis;
+        }
+
+        .group-pending-count {
+            flex-basis: 10%;
+            text-align: center;
+            
+            &>div {
+                background-color: orange;
+                border-radius: 50%;
+                height: 20px;
+                width: 20px;
+                text-align: center;
+                font-weight: 600;
+                color: white;
+                line-height: 19px;
+                font-size: 0.7rem;
+            }
+        }
+    }
+}

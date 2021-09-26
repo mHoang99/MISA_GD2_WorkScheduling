@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import jwtDecode from "jwt-decode";
 import { Observable } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { AuthService } from "../services/auth/auth.service";
@@ -20,9 +21,19 @@ export class AuthGuard implements CanActivate {
             take(1),
             map(user => {
                 const isAuth = !!user;
+
                 if (isAuth) {
+                    console.log(user.role)
+
+                    if (!(route.data.role && route.data.role.indexOf(user.role) === -1)) {
+                        return true;
+                    } else {
+                        this.authService.logout();
+                    }
+
                     return true;
                 }
+
                 return this.router.createUrlTree(['/auth'])
             }));
     }

@@ -1,0 +1,44 @@
+<div class="event-list-container">
+    <div class="top-bar">
+        <div>Danh sách hàng chờ</div>
+        <div *ngIf="isMultipleMode">
+            <button (click)="deleteMultipleEvents.emit(getListOfCheckedEventId())">Xóa hết</button>
+            <button (click)="approveMultipleEvents.emit(getListOfCheckedEventId())">Duyệt hết</button>
+        </div>
+    </div>
+    <div class="table-container">
+        <table *ngIf="eventList && eventList.length > 0">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="checkAll" id="checkAll" [(ngModel)]="isCheckAll"></th>
+                    <th>#</th>
+                    <th style="min-width: 200px;">Tiêu đề</th>
+                    <th style="min-width: 150px;">Ngày bắt đầu</th>
+                    <th style="min-width: 120px;">Thời gian bắt đầu</th>
+                    <th style="min-width: 120px;">Ngày kết thúc</th>
+                    <th style="min-width: 120px;">Thời gian kết thúc</th>
+                    <th style="min-width: 80px;" *ngIf="!isMultipleMode">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let event of eventList; let i = index; trackBy:trackByIdx"
+                    (click)="selectEventRow(event.eventId)">
+                    <td><input type="checkbox" name="" id="" [(ngModel)]="isCheck[i]"
+                            (ngModelChange)="checkBoxModalValueChange($event)"></td>
+                    <td>{{i+1}}</td>
+                    <td>{{event.title}}</td>
+                    <td>{{event.startTime | date:'dd/MM/yyyy'}}</td>
+                    <td>{{event.startTime | date:'HH:mm'}}</td>
+                    <td>{{event.endTime | date:'dd/MM/yyyy'}}</td>
+                    <td>{{event.endTime | date:'HH:mm'}}</td>
+                    <td *ngIf="!isMultipleMode">
+                        <button (click)="deleteEvent.emit(event.eventId)">Xóa</button>
+                        <button (click)="approveEvent.emit(event.eventId)">Duyệt</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="!eventList || eventList.length <= 0">Không có dữ liệu</div>
+</div>

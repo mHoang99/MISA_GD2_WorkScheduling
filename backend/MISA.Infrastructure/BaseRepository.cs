@@ -181,7 +181,11 @@ namespace MISA.Infrastructure
                 var propertyName = property.Name;
                 var propertyValue = property.GetValue(entity);
                 var propertyType = property.PropertyType;
-                if (propertyType == typeof(Guid) || propertyType == typeof(Guid?))
+                if(propertyName == "EntityState")
+                {
+                    continue;
+                }
+                else if (propertyType == typeof(Guid) || propertyType == typeof(Guid?))
                 {
                     parameters.Add($"@{propertyName}", propertyValue, DbType.String);
                 }

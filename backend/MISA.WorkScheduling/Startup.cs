@@ -18,6 +18,7 @@ using MISA.Infrastructure.Database;
 using MISA.WorkScheduling.API.Authentication.JWT;
 using MISA.WorkScheduling.API.Authentication.JWT.Validators;
 using MISA.WorkScheduling.API.Middlewares;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,9 +69,11 @@ namespace MISA.WorkScheduling
             services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IGroupService, GroupService>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddTransient<IDBContext, DBContext>();
 
             //services.AddControllers().AddJsonOptions(options => {
@@ -81,6 +84,12 @@ namespace MISA.WorkScheduling
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MISA.WorkScheduling", Version = "v1" });
             });
+
+            services.AddControllers()
+             .AddNewtonsoftJson(options =>
+             {
+                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

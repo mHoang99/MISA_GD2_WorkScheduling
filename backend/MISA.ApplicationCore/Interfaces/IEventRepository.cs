@@ -16,5 +16,9 @@ namespace MISA.ApplicationCore.Interfaces
         /// <returns></returns>
         Task<IEnumerable<object>> GetEntitiesByEmployeeId(Guid employeeId);
         Task<IEnumerable<object>> GetEntitiesByManagerId(Guid managerId);
+        Task<IEnumerable<object>> GetPendingEntitiesByGroupId(Guid groupId);
+        Task<int> DeleteEntitesByIds(string idsString);
+        Task<int> ApproveEntitesByIds(string idsString, Guid approverId);
+        Task<int> CompleteById(Guid id);
     }
 }

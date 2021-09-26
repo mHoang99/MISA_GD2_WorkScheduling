@@ -1,36 +1,51 @@
 <app-modal [isShow]="isShow" (isShowChange)="isShowChange.emit($event)" [isLoading]="isLoading">
-    <div slot="header">ABC</div>
+    <div slot="header">
+        <div class="m-modal-header">Đặt lịch mới</div>
+    </div>
     <div slot="body">
-        <div>
-            <form #addEventForm="ngForm" class="form-calendar-add-event" (ngSubmit)="onSubmit(addEventForm)" *ngIf="!isLoading">
+        <div class="m-modal-body">
+            <form #addEventForm="ngForm" class="form-calendar-add-event" ngCa (ngSubmit)="onSubmit(addEventForm)"
+                *ngIf="!isLoading">
                 <div class="input-box">
                     <label for="title-content">Tiêu đề</label>
                     <input class="form-control" name="title" id="title-field" placeholder="Tiêu đề" ngModel required>
                 </div>
                 <div class="input-box">
                     <label for="content-field">Nội dung</label>
-                    <textarea class="form-control" name="content" id="content-field" placeholder="Nội dung chi tiết" ngModel></textarea>
+                    <textarea class="form-control" name="content" id="content-field" placeholder="Nội dung chi tiết"
+                        ngModel></textarea>
                 </div>
-                <div class="input-box">
-                    <label for="start-date-field">Ngày bắt đầu</label>
-                    <input type="date" class="form-control" name="startDate" id="start-date-field" placeholder="dd/mm/yyyy" ngModel>
+                <div class="datetime-container">
+                    <div class="input-box input-left">
+                        <label for="start-date-field">Ngày bắt đầu</label>
+                        <input type="date" class="form-control" name="startDate" id="start-date-field"
+                            placeholder="dd/mm/yyyy" ngModel>
+                    </div>
+                    <div class="input-box input-left">
+                        <label for="start-date-time-field">Thời gian bắt đầu</label>
+                        <input type="time" class="form-control" name="startTime" id="start-date-time-field"
+                            placeholder="dd/mm/yyyy" ngModel>
+                    </div>
                 </div>
-                <div class="input-box">
-                    <label for="end-date-field">Ngày kết thúc</label>
-                    <input type="date" class="form-control" name="endDate" id="end-date-field" placeholder="dd/mm/yyyy" ngModel>
+                <div class="datetime-container  last-row">
+                    <div class="input-box input-right">
+                        <label for="end-date-field">Ngày kết thúc</label>
+                        <input type="date" class="form-control" name="endDate" id="end-date-field"
+                            placeholder="dd/mm/yyyy" ngModel>
+                    </div>
+
+                    <div class="input-box input-right">
+                        <label for="end-date-time-field">Thời gian kết thúc</label>
+                        <input type="time" class="form-control" name="endTime" id="end-date-time-field"
+                            placeholder="dd/mm/yyyy" ngModel>
+                    </div>
                 </div>
-                <div class="input-box">
-                    <label for="start-date-time-field">Thời gian bắt đầu</label>
-                    <input type="time" class="form-control" name="startTime" id="start-date-time-field" placeholder="dd/mm/yyyy" ngModel>
+                <span class="form-warning" id="form-warning">{{error}}</span>
+                <div class="form-btns-container">
+                    <button class="btn-cancel" (click)="isShowChange.emit(false)">Hủy</button>
+                    <button class="btn-add" type="submit" [disabled]="!addEventForm.valid">Thêm</button>
                 </div>
-                <div class="input-box">
-                    <label for="end-date-time-field">Thời gian kết thúc</label>
-                    <input type="time" class="form-control" name="endTime" id="end-date-time-field" placeholder="dd/mm/yyyy" ngModel>
-                </div>
-                <button type="submit" [disabled]="!addEventForm.valid">Thêm</button>
-                <h4 class="form-warning" id="form-warning">{{error}}</h4>
             </form>
         </div>
     </div>
-    <div slot="footer">ASD</div>
 </app-modal>

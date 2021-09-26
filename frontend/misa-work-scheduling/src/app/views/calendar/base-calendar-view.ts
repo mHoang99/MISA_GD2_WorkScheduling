@@ -45,6 +45,7 @@ export const DEFAULT_CALENDAR_OPTIONS: CalendarOptions =
         hour12: false,
     },
 
+    
     buttonText: {
         today: 'Hôm nay',
         month: 'Tháng',
@@ -52,6 +53,15 @@ export const DEFAULT_CALENDAR_OPTIONS: CalendarOptions =
         day: 'Ngày',
         list: 'Danh sách'
     },
+    
+    eventTimeFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        meridiem: false
+    },
+
+    firstDay: 1,
+
     dayMaxEventRows: 3
 };
 
@@ -65,7 +75,7 @@ export class BaseCalendarView {
     constructor(protected calendarService: CalendarService) { }
 
     setupEventSources() {
-        this.eventSrcSub = this.calendarService.EventSources.subscribe(
+        this.eventSrcSub = this.calendarService.eventSources.subscribe(
             eventSources => {
                 this.calendarApi.removeAllEventSources();
                 this.calendarApi.addEventSource(eventSources.approvedEventSource)

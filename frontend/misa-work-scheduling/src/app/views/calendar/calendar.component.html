@@ -1,9 +1,15 @@
 <div>
     <div>Kế hoạch làm việc</div>
-    <app-calendar-add-form [isShow]='isAddFormShow' (isShowChange)="isAddFormShowChange($event)"></app-calendar-add-form>
+    <app-calendar-add-form [isShow]='isAddFormShow' (isShowChange)="isAddFormShowChange($event)">
+    </app-calendar-add-form>
     <div>
-        <button>Thêm sự kiện</button>
+        <button (click)="addEventBtnClick()">Thêm sự kiện</button>
     </div>
-    <router-outlet></router-outlet>
-
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+    <app-modal [isShow]="isEventDetailsShow" [isLoading]="eventCardLoading" (isShowChange)="isEventDetailsShow=$event">
+        <app-event-card slot="body" [event]="selectingEvent" mode="view" (eventClose)="isEventDetailsShow = false"
+            (eventDelete)="deleteEvent($event)"
+            (eventComplete)="completeEvent($event)">
+        </app-event-card>
+    </app-modal>
 </div>

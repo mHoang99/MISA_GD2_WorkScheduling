@@ -1,0 +1,36 @@
+<div class="event-card-container">
+    <div *ngIf="!event" class="no-content">
+        Không có dữ liệu hiển thị
+    </div>
+    <div *ngIf="event" class="no-content">
+        <div class="event-card-title">{{event.title}}</div>
+        <div>{{event.fullName}}</div>
+
+        <div>
+            Bắt đầu
+            <div>{{event.startTime | date:"dd/MM/yyyy"}}</div>
+            <div>{{event.startTime | date:"HH:mm"}}</div>
+        </div>
+        <div>
+            Kết thúc
+            <div>{{event.endTime | date:"dd/MM/yyyy"}}</div>
+            <div>{{event.endTime | date:"HH:mm"}}</div>
+        </div>
+        Nội dung chi tiết
+        <div>{{event.content}}</div>
+        <div>
+            <button *ngIf="mode === 'view'" (click)="eventClose.emit()">
+                Đóng
+            </button>
+            <button (click)="deleteBtnClick()">
+                Xóa
+            </button>
+            <button *ngIf="mode === 'approve'" (click)="eventApprove.emit(event.eventId)">
+                Phê duyệt
+            </button>
+            <button *ngIf="mode === 'view' && event.currentStatus == 1" (click)="eventComplete.emit(event.eventId)">
+                Hoàn thành
+            </button>
+        </div>
+    </div>
+</div>
