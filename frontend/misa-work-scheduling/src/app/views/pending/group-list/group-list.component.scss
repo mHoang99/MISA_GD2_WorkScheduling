@@ -5,6 +5,7 @@
     padding: 8px 0;
     overflow-y: auto;
     border-radius: 4px;
+    position: relative;
 
     .group-row {
         display: flex;
@@ -19,8 +20,12 @@
             background-color: #ddd;
         }
 
+        &.disabled {
+            background-color: #ddd;
+        }
+
         .group-code {
-            flex-basis: 20%;
+            flex-basis: 40px;
             text-overflow: ellipsis;
         }
 
@@ -31,10 +36,10 @@
         }
 
         .group-pending-count {
-            flex-basis: 10%;
+            flex-basis: 20px;
             text-align: center;
-            
-            &>div {
+
+            & > div {
                 background-color: orange;
                 border-radius: 50%;
                 height: 20px;
@@ -42,9 +47,16 @@
                 text-align: center;
                 font-weight: 600;
                 color: white;
-                line-height: 19px;
+                line-height: 20px;
                 font-size: 0.7rem;
             }
         }
+    }
+
+    .loading-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
     }
 }

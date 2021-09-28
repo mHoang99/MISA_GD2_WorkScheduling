@@ -74,16 +74,17 @@ namespace MISA.WorkScheduling.API.Controllers
 
                 if (addRes.SuccessState)
                 {
-                    return Ok(new
+                    addRes.Data = new
                     {
                         user = user,
                         accessToken = tokenString,
                         refreshToken = refreshTokenString
-                    });
+                    };
+                    return Ok(addRes.ConvertToApiReturn());
                 }
                 else
                 {
-                    return StatusCode(500, addRes.ConvertToApiReturn());
+                    return Ok(addRes.ConvertToApiReturn());
                 }
             }
             //Tài khoản không hợp lệ
@@ -106,19 +107,24 @@ namespace MISA.WorkScheduling.API.Controllers
             bool isValidRefreshToken = _refreshTokenValidator.Validate(refreshRequest.RefreshToken);
             if (!isValidRefreshToken)
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
             //Lấy thông tin user tương ứng với token
             var serviceRes = await _authService.getRefreshTokenOwner(refreshRequest.RefreshToken);
-            
+
             if (!serviceRes.SuccessState)
             {
                 return Unauthorized();
             }
 
+            serviceRes.Data = new
+            {
+                AccessToken = _accessTokenGenerator.GenerateToken(serviceRes.Data as User)
+            };
+
             //Trả về token mới
-            return Ok(new { AccessToken = _accessTokenGenerator.GenerateToken(serviceRes.Data as User) });
+            return Ok(serviceRes.ConvertToApiReturn());
         }
 
         /// <summary>
@@ -135,7 +141,7 @@ namespace MISA.WorkScheduling.API.Controllers
             //Xóa hết refresh token tương ứng vs id trong db
             var res = await _authService.DeleteRefreshTokenByUserId(userId);
 
-            return Ok(res);
+            return Ok(res.ConvertToApiReturn());
         }
 
         /// <summary>
@@ -150,10 +156,10 @@ namespace MISA.WorkScheduling.API.Controllers
 
             if (!res.SuccessState)
             {
-                return Unauthorized();
+                return Unauthorized(res.ConvertToApiReturn());
             }
 
-            return Ok(res.Data);
+            return Ok(res.ConvertToApiReturn());
         }
 
     }

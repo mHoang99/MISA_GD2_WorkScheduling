@@ -1,13 +1,15 @@
-<app-modal [isShow]="isShow" (isShowChange)="isShowChange.emit($event)" [isLoading]="isLoading">
+<app-modal [isShow]="isShow" (isShowChange)="isShowChange.emit($event)">
     <div slot="header">
         <div class="m-modal-header">Đặt lịch mới</div>
     </div>
     <div slot="body">
+        <div *ngIf="isLoading" class="loading-container">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
         <div class="m-modal-body">
-            <form #addEventForm="ngForm" class="form-calendar-add-event" ngCa (ngSubmit)="onSubmit(addEventForm)"
-                *ngIf="!isLoading">
+            <form #addEventForm="ngForm" class="form-calendar-add-event" ngCa (ngSubmit)="onSubmit(addEventForm)">
                 <div class="input-box">
-                    <label for="title-content">Tiêu đề</label>
+                    <label for="title-content" required>Tiêu đề</label>
                     <input class="form-control" name="title" id="title-field" placeholder="Tiêu đề" ngModel required>
                 </div>
                 <div class="input-box">
@@ -17,27 +19,26 @@
                 </div>
                 <div class="datetime-container">
                     <div class="input-box input-left">
-                        <label for="start-date-field">Ngày bắt đầu</label>
-                        <input type="date" class="form-control" name="startDate" id="start-date-field"
+                        <label for="start-date-field" required>Ngày bắt đầu</label>
+                        <input type="date" class="form-control" name="startDate" id="start-date-field" required
                             placeholder="dd/mm/yyyy" ngModel>
                     </div>
                     <div class="input-box input-left">
-                        <label for="start-date-time-field">Thời gian bắt đầu</label>
-                        <input type="time" class="form-control" name="startTime" id="start-date-time-field"
+                        <label for="start-date-time-field" required>Thời gian bắt đầu</label>
+                        <input type="time" class="form-control" name="startTime" id="start-date-time-field" required
                             placeholder="dd/mm/yyyy" ngModel>
                     </div>
                 </div>
                 <div class="datetime-container  last-row">
                     <div class="input-box input-right">
-                        <label for="end-date-field">Ngày kết thúc</label>
-                        <input type="date" class="form-control" name="endDate" id="end-date-field"
-                            placeholder="dd/mm/yyyy" ngModel>
+                        <label for="end-date-field" required>Ngày kết thúc</label>
+                        <input type="date" class="form-control" name="endDate" id="end-date-field" required ngModel>
                     </div>
 
                     <div class="input-box input-right">
-                        <label for="end-date-time-field">Thời gian kết thúc</label>
-                        <input type="time" class="form-control" name="endTime" id="end-date-time-field"
-                            placeholder="dd/mm/yyyy" ngModel>
+                        <label for="end-date-time-field" required>Thời gian kết thúc</label>
+                        <input type="time" class="form-control" name="endTime" id="end-date-time-field" required
+                            ngModel>
                     </div>
                 </div>
                 <span class="form-warning" id="form-warning">{{error}}</span>

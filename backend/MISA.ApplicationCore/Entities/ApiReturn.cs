@@ -11,9 +11,11 @@ namespace MISA.ApplicationCore.Entities
     /// </summary>
     /// CREATEDBY: VMHOANG (28/07/2021)
 
-    public class ApiErrorReturn
+    public class ApiReturn
     {
         #region Properties
+        public bool Success { get; set; }
+        public dynamic Data { get; set; }
         public string DevMsg { get; set; }
         public string UserMsg { get; set; }
         public string ErrorCode { get; set; }

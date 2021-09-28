@@ -2,13 +2,23 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { throwError } from "rxjs";
 import { catchError } from 'rxjs/operators';
+import { MESSAGE } from "src/app/common/consts/text";
+import { NotificationService } from "src/app/components/layouts/notification/notification.service";
 
+
+export interface AppServerResponse<T> {
+    success: boolean,
+    data: T,
+    userMsg: string,
+    devMsg: string
+    errorCode: string
+}
 
 /**
  * Base class cho việc gọi api
  */
 export class HttpService {
-    constructor(protected http: HttpClient, protected router: Router) { }
+    constructor(protected http: HttpClient, protected router: Router, protected notificationService: NotificationService) { }
 
     protected defaultPath = "";
 
@@ -18,7 +28,7 @@ export class HttpService {
      */
     getAll() {
         return this.http
-            .get(
+            .get<AppServerResponse<any>>(
                 this.defaultPath
             )
             .pipe(
@@ -35,7 +45,7 @@ export class HttpService {
      */
     getById(id: string) {
         return this.http
-            .get(
+            .get<AppServerResponse<any>>(
                 this.defaultPath + `/${id}`
             )
             .pipe(
@@ -52,7 +62,7 @@ export class HttpService {
      */
     post(body: {}) {
         return this.http
-            .post(
+            .post<AppServerResponse<any>>(
                 this.defaultPath,
                 body
             )
@@ -71,7 +81,7 @@ export class HttpService {
      */
     put(id: string, body: {}) {
         return this.http
-            .put(
+            .put<AppServerResponse<any>>(
                 this.defaultPath + `/${id}`,
                 body
             )
@@ -90,7 +100,7 @@ export class HttpService {
      */
     delete(id: string) {
         return this.http
-            .delete(
+            .delete<AppServerResponse<any>>(
                 this.defaultPath + `/${id}`
             )
             .pipe(
@@ -106,10 +116,15 @@ export class HttpService {
      * @returns 
      */
     protected handleError(errorRes: HttpErrorResponse) {
-        let errorMessage = 'An unknown error occurred!';
+        let errorMessage = MESSAGE.EXCEPTION;
+        console.log(errorRes.error)
+
+        this.notificationService.addWarningNotification(errorMessage);
+        
         if (!errorRes.error) {
             return throwError(errorMessage);
         }
+        
         errorMessage = errorRes.error.message;
         return throwError(errorMessage);
     }

@@ -22,9 +22,39 @@ namespace MISA.ApplicationCore.Interfaces
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<ServiceResult> GetByEmployeeId(string employeeId);
-        Task<ServiceResult> GetPendingByGroupId(string groupId);
+        /// <summary>
+        /// Lấy những bản ghi đang trong trạng thái chờ theo nhóm
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <param name="managerId"></param>
+        /// <returns></returns>
+        Task<ServiceResult> GetPendingByGroupId(string groupId, string managerId);
+        /// <summary>
+        /// Xóa nhiều bản ghi
+        /// </summary>
+        /// <param name="ids">Danh sách id cần xóa</param>
+        /// <returns></returns>
         Task<ServiceResult> RemoveMultiple(IEnumerable<string> ids);
+        /// <summary>
+        /// Duyệt nhiều bản ghi
+        /// </summary>
+        /// <param name="ids">Danh sách id cần duyệt</param>
+        /// <param name="approverId"></param>
+        /// <returns></returns>
         Task<ServiceResult> ApproveMultiple(IEnumerable<string> ids, string approverId);
+        /// <summary>
+        /// Hoàn thành 1 bản ghi
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<ServiceResult> CompleteEvent(string id);
+        /// <summary>
+        /// Lấy danh sách sự kiện của employee theo khoảng thời gian
+        /// </summary>
+        /// <param name="employeeIdString"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        Task<ServiceResult> GetOfEmployeeIdByRange(string employeeIdString, DateTime start, DateTime end);
     }
 }

@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
+/**
+ * Interface cho việc hiển thị group
+ */
 interface DisplayGroup {
     groupId: string,
     groupName: string,
@@ -13,7 +16,11 @@ interface DisplayGroup {
     styleUrls: ["./group-list.component.scss"]
 })
 export class GroupListComponent implements OnInit {
+    //Danh sách group
     @Input() groupList: DisplayGroup[];
+    //Group đang được chọn
+    @Input() selectedGroupId: string;
+    //Đang loading
     @Input() isLoading: boolean = false;
 
     @Output() groupSelect = new EventEmitter();
@@ -24,8 +31,11 @@ export class GroupListComponent implements OnInit {
     ngOnInit() {
     }
 
+    /**
+     * chọn 1 group
+     * @param groupId 
+     */
     groupClick(groupId: string) {
-        console.log(groupId);
         this.groupSelect.emit(groupId);
     }
 

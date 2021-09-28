@@ -2,6 +2,9 @@ import { Calendar, CalendarOptions } from "@fullcalendar/core";
 import { Subscription } from "rxjs";
 import { CalendarService } from "./calendar.service";
 
+/**
+ * Config cho full calendar
+ */
 export const DEFAULT_CALENDAR_OPTIONS: CalendarOptions =
 {
     locale: "vi",
@@ -34,8 +37,14 @@ export const DEFAULT_CALENDAR_OPTIONS: CalendarOptions =
     },
 
     slotDuration: "00:15:00",
-    slotMinTime: "09:00:00",
-    slotMaxTime: "18:00:00",
+
+    businessHours: {
+        // days of week. an array of zero-based day of week integers (0=Sunday)
+        daysOfWeek: [1, 2, 3, 4, 5, 6], // Monday - Thursday
+
+        startTime: '08:00', // a start time (10am in this example)
+        endTime: '18:00', // an end time (6pm in this example)
+    },
 
     slotLabelFormat: {
         hour: 'numeric',
@@ -45,7 +54,7 @@ export const DEFAULT_CALENDAR_OPTIONS: CalendarOptions =
         hour12: false,
     },
 
-    
+
     buttonText: {
         today: 'Hôm nay',
         month: 'Tháng',
@@ -53,7 +62,7 @@ export const DEFAULT_CALENDAR_OPTIONS: CalendarOptions =
         day: 'Ngày',
         list: 'Danh sách'
     },
-    
+
     eventTimeFormat: {
         hour: '2-digit',
         minute: '2-digit',
@@ -62,7 +71,11 @@ export const DEFAULT_CALENDAR_OPTIONS: CalendarOptions =
 
     firstDay: 1,
 
-    dayMaxEventRows: 3
+    dayMaxEventRows: 3,
+
+    editable: false,
+
+    droppable: false,
 };
 
 
@@ -74,6 +87,9 @@ export class BaseCalendarView {
 
     constructor(protected calendarService: CalendarService) { }
 
+    /**
+     * Thiết lập kho lưu sự kiện
+     */
     setupEventSources() {
         this.eventSrcSub = this.calendarService.eventSources.subscribe(
             eventSources => {
@@ -83,5 +99,14 @@ export class BaseCalendarView {
                 this.calendarApi.addEventSource(eventSources.completedEventSource)
             }
         )
+    }
+
+    /**
+     * Load dữ liệu về sự kiện theo khoảng thời gian
+     * @param start bắt đầu
+     * @param end kết thúc
+     */
+    loadEvents(start: Date, end: Date) {
+        this.calendarService.loadEvents(start, end);
     }
 }

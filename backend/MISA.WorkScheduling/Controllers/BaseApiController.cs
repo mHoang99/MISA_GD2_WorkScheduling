@@ -50,14 +50,7 @@ namespace MISA.WorkScheduling.API
         {
             var res = await _service.Get();
 
-            if (res.SuccessState)
-            {
-                return Ok(res.Data);
-            }
-            else
-            {
-                return BadRequest(res.ConvertToApiReturn());
-            }
+            return Ok(res.ConvertToApiReturn());
         }
 
         /// <summary>
@@ -71,14 +64,8 @@ namespace MISA.WorkScheduling.API
         {
             var res = await _service.GetById(id);
 
-            if (res.SuccessState)
-            {
-                return Ok(res.Data);
-            }
-            else
-            {
-                return BadRequest(res.ConvertToApiReturn());
-            }
+            return Ok(res.ConvertToApiReturn());
+
         }
 
         /// <summary>
@@ -90,16 +77,9 @@ namespace MISA.WorkScheduling.API
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] T entity)
         {
-
             var res = await _service.Add(entity);
-            if (res.SuccessState)
-            {
-                return StatusCode(201, res.Data);
-            }
-            else
-            {
-                return Ok(res.ConvertToApiReturn());
-            }
+
+            return Ok(res.ConvertToApiReturn());
         }
 
         /// <summary>
@@ -115,14 +95,9 @@ namespace MISA.WorkScheduling.API
         {
 
             var res = await _service.Update(id, entity);
-            if (res.SuccessState)
-            {
-                return StatusCode(201, res.Data);
-            }
-            else
-            {
-                return Ok(res.ConvertToApiReturn());
-            }
+
+            return Ok(res.ConvertToApiReturn());
+
         }
 
         /// <summary>
@@ -137,14 +112,8 @@ namespace MISA.WorkScheduling.API
         {
             var res = await _service.Delete(id);
 
-            if (res.SuccessState)
-            {
-                return Ok(res.Data);
-            }
-            else
-            {
-                return Ok(res.ConvertToApiReturn());
-            }
+            return Ok(res.ConvertToApiReturn());
+
         }
         #endregion
 

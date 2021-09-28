@@ -14,7 +14,7 @@ namespace MISA.Infrastructure
     /// Base Repository kết nối database
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// CREATEDBY: VMHOANG (27/07/2021)
+    /// CREATEDBY: VMHOANG
     public class BaseRepository<T> : IBaseRepository<T>, IDisposable where T : BaseModel
     {
         #region Fields
@@ -47,7 +47,7 @@ namespace MISA.Infrastructure
             return entities;
         }
 
-        async public Task<IEnumerable<Object>> GetView()
+        async public Task<IEnumerable<object>> GetView()
         {
             //Khởi tạo commandText
             var query = $"SELECT * FROM View_{_tableName}";

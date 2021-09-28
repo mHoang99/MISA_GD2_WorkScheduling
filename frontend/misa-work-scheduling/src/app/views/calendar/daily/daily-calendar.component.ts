@@ -10,7 +10,7 @@ import { CalendarService, EventSource } from "../calendar.service";
     templateUrl: "./daily-calendar.component.html",
     styleUrls: ["./daily-calendar.component.scss"]
 })
-export class DailyCalendarViewComponent extends BaseCalendarView implements OnInit, AfterViewInit, OnDestroy {
+export class DailyCalendarViewComponent extends BaseCalendarView implements AfterViewInit, OnDestroy {
     @ViewChild('calendar', { static: true }) calendar: FullCalendarComponent;
     
     @Output() eventClick = new EventEmitter();
@@ -28,7 +28,7 @@ export class DailyCalendarViewComponent extends BaseCalendarView implements OnIn
         allDaySlot: false,
 
         datesSet: (date) => {
-            this.calendarService.loadEvents();
+            this.loadEvents(date.start, date.end);
         },
 
         /**
@@ -42,9 +42,6 @@ export class DailyCalendarViewComponent extends BaseCalendarView implements OnIn
 
     constructor(private router: Router, calendarService: CalendarService) {
         super(calendarService);
-    }
-
-    ngOnInit() {
     }
 
     ngAfterViewInit() {
@@ -62,4 +59,6 @@ export class DailyCalendarViewComponent extends BaseCalendarView implements OnIn
     ngOnDestroy() {
         this.eventSrcSub.unsubscribe();
     }
+
+
 }

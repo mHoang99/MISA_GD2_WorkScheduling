@@ -56,8 +56,12 @@ export class MonthlyCalendarViewComponent extends BaseCalendarView implements On
             this.router.navigate(["calendar/weekly"], { state: { data: { date: date } } });
         },
 
+        /**
+         * Hàm handle khi set lại ngày
+         * @param date 
+         */
         datesSet: (date) => {
-            this.calendarService.loadEvents();
+            this.loadEvents(date.start, date.end);
         }
     };
 

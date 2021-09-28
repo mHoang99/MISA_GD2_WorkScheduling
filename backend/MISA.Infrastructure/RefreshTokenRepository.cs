@@ -11,12 +11,19 @@ using System.Threading.Tasks;
 
 namespace MISA.Infrastructure
 {
+    /// <summary>
+    /// Refresh Token Repository kết nối database
+    /// </summary>
+    /// CREATEDBY: VMHOANG
     public class RefreshTokenRepository : BaseRepository<RefreshToken>, IRefreshTokenRepository
     {
+        #region Constructor
         public RefreshTokenRepository(IDBContext dbContext) : base(dbContext)
         {
         }
+        #endregion
 
+        #region Methods
         async public Task<int> DeleteByUserId(Guid userId)
         {
             var rowsAffected = 0;
@@ -44,5 +51,6 @@ namespace MISA.Infrastructure
 
             return rowsAffected;
         }
+        #endregion
     }
 }

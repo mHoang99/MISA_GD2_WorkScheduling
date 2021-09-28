@@ -1,13 +1,22 @@
-<app-modal [isShow]="isShow" [isLoading]="false">
-    <div slot="body">
-        <div>ICON</div>
-        <p>
-            <ng-content></ng-content>
-        </p>
+<app-modal [isShow]="isShow">
+    <div slot="body" class="popup-body">
+        <div class="loading-container" *ngIf="isLoading">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
+        <div class="icon" [style]="{backgroundColor: iconColor}">
+            <i class="bi bi-exclamation-triangle-fill" *ngIf="type==='warning'"></i>
+            <i class="bi bi-question-lg" *ngIf="type==='confirm'"></i>
+            <i class="bi bi-check-lg" *ngIf="type==='success'"></i>
+        </div>
+        <div>
+            <p>
+                <ng-content></ng-content>
+            </p>
+        </div>
     </div>
-    <div slot="footer">
-        <button *ngIf="type==='confirm'" (click)="closeBtnClick.emit('')">Hủy</button>
-        <button *ngIf="type==='confirm'" (click)="confirmBtnClick.emit('')">Đồng ý</button>
-        <button *ngIf="type!='confirm'" (click)="closeBtnClick.emit('')">Đóng</button>
+    <div slot="footer" class="popup-footer">
+        <button class="m-btn btn-cancel" *ngIf="type==='confirm'" (click)="closeBtnClick.emit('')">Hủy</button>
+        <button class="m-btn btn-confirm" *ngIf="type==='confirm'" (click)="confirmBtnClick.emit('')">Đồng ý</button>
+        <button class="m-btn btn-close" *ngIf="type!='confirm'" (click)="closeBtnClick.emit('')">Đóng</button>
     </div>
 </app-modal>

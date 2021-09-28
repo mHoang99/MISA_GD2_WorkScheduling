@@ -1,3 +1,6 @@
+/**
+ * Model cho sự kiện
+ */
 export class CalendarEvent {
     constructor(
         public eventId: string,

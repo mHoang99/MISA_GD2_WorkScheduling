@@ -1,7 +1,6 @@
 <div class="m-modal" *ngIf="isShow">
     <div class="m-modal-backdrop" (click)="onBackdropClick($event)"></div>
     <div class="m-modal-dialog">
-        <app-loading-spinner *ngIf='isLoading'></app-loading-spinner>
         <div class="m-modal-header">
             <ng-content select="[slot=header]"></ng-content>
         </div>

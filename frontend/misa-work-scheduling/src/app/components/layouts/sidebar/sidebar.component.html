@@ -11,7 +11,7 @@
         <i class="bi bi-calendar-fill"></i>
         <span>Lịch tháng</span>
     </div>
-    <div routerLinkActive="active-link" routerLink="/pending" title="Chờ phê duyệt">
+    <div routerLinkActive="active-link" routerLink="/pending" title="Chờ phê duyệt" *ngIf="isManager">
         <i class="bi bi-hourglass-split"></i>
         <span>Chờ phê duyệt</span>
     </div>

@@ -1,46 +1,100 @@
 .event-list-container {
-    max-width: 700px;
-    max-height: 700px;
+    width: 100%;
+    height: 100%;
+    max-height: fit-content;
 
     position: relative;
 
     .top-bar {
         display: flex;
         justify-content: space-between;
-        height: 40px;
+        height: 60px;
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+        #deleteAllBtn {
+            color: white;
+            background-color: #f65454;
+        }
+
+        #approveAllBtn {
+            color: white;
+            background-color: orange;
+            margin-left: 8px;
+        }
     }
 
     .table-container {
         overflow: auto;
-        max-height: 600px;
-        max-width: 100%;
+        width: 100%;
+        height: calc(100% - 60px);
+        position: relative;
+
         table {
+            min-width: 100%;
+            border-collapse: separate; /* Don't collapse */
+            border-spacing: 0;
+
             &,
             td {
-                border: 1px solid #ddd;
+                border: 1px solid #aaa;
                 min-width: 40px;
             }
 
             th,
             td {
-                line-height: 38px;
+                line-height: 48px;
+                padding: 0 8px;
+                font-size: 0.8rem;
             }
 
             thead {
                 background-color: black;
-                z-index: 3;
+                z-index: 2;
                 position: sticky;
                 top: 0;
                 th {
                     color: white;
                 }
+
+                th:first-child {
+                    position: sticky;
+                    left: 0;
+                    z-index: 4;
+                    background-color: black;
+                    padding-top: 4px;
+                }
             }
+
             tbody {
                 tr:hover {
                     background-color: #ddd;
                     cursor: pointer;
                 }
+
+                td:first-child {
+                    position: sticky;
+                    left: 0px;
+                    z-index: 1;
+                    background-color: white;
+                    padding-top: 4px;
+                }
             }
+
+            input[type="checkbox"] {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        .loading-container{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
         }
     }
 }

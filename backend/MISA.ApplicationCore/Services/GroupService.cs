@@ -10,17 +10,26 @@ using System.Threading.Tasks;
 
 namespace MISA.ApplicationCore.Services
 {
+    /// <summary>
+    /// Group service xử lý nghiệp vụ
+    /// </summary>
     public class GroupService : BaseService<Group>, IGroupService
     {
-
+        #region Fields
         private new IGroupRepository _repository;
 
+        #endregion
+
+        #region Constructor
         public GroupService(IGroupRepository repository) : base(repository)
         {
             _repository = repository;
         }
+        #endregion
 
-        public async Task<ServiceResult> GetOfManager(string managerEmployeeId) {
+        #region Methods
+        public async Task<ServiceResult> GetOfManager(string managerEmployeeId)
+        {
             try
             {
                 //kiểm tra id là guid
@@ -46,5 +55,6 @@ namespace MISA.ApplicationCore.Services
                 );
             }
         }
+        #endregion
     }
 }

@@ -1,5 +1,5 @@
 <div class=group-list-container>
-    <div class="group-row" *ngFor="let group of groupList" (click)="groupClick(group.groupId)">
+    <div class="group-row" *ngFor="let group of groupList" (click)="groupClick(group.groupId)" [class.disabled]="selectedGroupId == group.groupId">
         <div class="group-code" [title]="group.groupCode">{{group.groupCode}}</div>
         <div class="group-name" [title]="group.groupName">{{group.groupName}}</div>
         <div class="group-pending-count" title="Số sự kiện đang chờ duyệt">
@@ -7,5 +7,8 @@
                 {{group.pendingEventCount < 100 ? group.pendingEventCount : '99+'}}
             </div>
         </div>
+    </div>
+    <div *ngIf="isLoading" class="loading-container">
+        <app-loading-spinner></app-loading-spinner>
     </div>
 </div>

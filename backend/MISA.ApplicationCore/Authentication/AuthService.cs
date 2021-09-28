@@ -13,22 +13,31 @@ using System.Threading.Tasks;
 
 namespace MISA.ApplicationCore.Authentication
 {
+    /// <summary>
+    /// Service xử lý authentication
+    /// </summary>
     public class AuthService : BaseService<RefreshToken>, IAuthService
     {
+        #region Fields
         private IBaseRepository<User> _userRepository;
 
         private new IRefreshTokenRepository _repository;
+        #endregion
 
+        #region Constructor
         public AuthService(
-            IRefreshTokenRepository repository,
-            IBaseRepository<User> userRepo
-            )
-            : base(repository)
+           IRefreshTokenRepository repository,
+           IBaseRepository<User> userRepo
+           )
+           : base(repository)
         {
             _userRepository = userRepo;
             _repository = repository;
         }
 
+        #endregion
+
+        #region Methods
         async public Task<ServiceResult> AddRefreshToken(string refreshTokenString, Guid userId)
         {
             try
@@ -41,7 +50,6 @@ namespace MISA.ApplicationCore.Authentication
 
                 serviceResult.SuccessState = true;
                 serviceResult.Data = await _repository.Add(entity);
-                serviceResult.MISACode = Enums.MISACode.IsValid;
 
                 //Không tác động được bản ghi
                 if (int.Parse(serviceResult.Data.ToString()) <= 0)
@@ -73,9 +81,10 @@ namespace MISA.ApplicationCore.Authentication
 
                 var user = await _userRepository.GetEntityByProperty(tmpUser, usernameProp);
 
+                //Không tìm thấy user
                 if (user == null)
                 {
-                    serviceResult.UserMsg = "Nguời dùng không tồn tại";
+                    serviceResult.UserMsg = Properties.Resources.MISA_ResponseMessage_UserNotFound;
                     serviceResult.DevMsg = serviceResult.UserMsg;
                     serviceResult.SuccessState = false;
                     return serviceResult;
@@ -84,7 +93,7 @@ namespace MISA.ApplicationCore.Authentication
                 //Verify Password
                 if (!Hasher.BCryptVerify(entity.Password, user.Password))
                 {
-                    serviceResult.UserMsg = "Mật khẩu không chính xác";
+                    serviceResult.UserMsg = Properties.Resources.MISA_ResponseMessage_WrongPassword;
                     serviceResult.DevMsg = serviceResult.UserMsg;
                     serviceResult.SuccessState = false;
                     return serviceResult;
@@ -135,7 +144,7 @@ namespace MISA.ApplicationCore.Authentication
         {
             try
             {
-
+                //Hash token để so sánh vs db
                 var tmpToken = new RefreshToken
                 {
                     HashedValue = Hasher.Sha256Hash(refreshTokenString)
@@ -143,22 +152,24 @@ namespace MISA.ApplicationCore.Authentication
 
                 var hashedValueProperty = tmpToken.GetType().GetProperty("HashedValue");
 
+                //Gọi repository tìm token
                 var currentToken = await _repository.GetEntityByProperty(tmpToken, hashedValueProperty);
 
                 if (currentToken == null)
                 {
                     //lỗi
-                    serviceResult.UserMsg = "token không tồn tại";
+                    serviceResult.UserMsg = Properties.Resources.MISA_ResponseMessage_TokenNotFound;
                     serviceResult.DevMsg = serviceResult.UserMsg;
                     serviceResult.SuccessState = false;
                     return serviceResult;
                 }
 
+                //Gọi repository lấy thông tin user
                 var user = await _userRepository.GetEntityById(currentToken.UserId);
                 if (user == null)
                 {
                     //Lỗi
-                    serviceResult.UserMsg = "user không tồn tại";
+                    serviceResult.UserMsg = Properties.Resources.MISA_ResponseMessage_UserNotFound;
                     serviceResult.DevMsg = serviceResult.UserMsg;
                     serviceResult.SuccessState = false;
                     return serviceResult;
@@ -200,5 +211,6 @@ namespace MISA.ApplicationCore.Authentication
                 );
             }
         }
+        #endregion
     }
 }

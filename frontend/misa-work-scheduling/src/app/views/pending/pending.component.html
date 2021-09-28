@@ -1,10 +1,14 @@
 <div class="view-container">
     <div class="view-left">
-        <div style="width: 300px; height: 200px;">
-            <app-group-list [groupList]="groupList" (groupSelect)="groupSelect($event)" [isLoading]="groupListLoading"></app-group-list>
+        <div>
+            <app-group-list [groupList]="groupList" (groupSelect)="groupSelect($event)" [isLoading]="groupListLoading" [selectedGroupId]="selectedGroupId"></app-group-list>
         </div>
-        <div style="height: 400px;">
-            <app-event-card mode="approve" [event]="selectedEvent"></app-event-card>
+        <div>
+            <app-event-card 
+            mode="approve" [event]="selectedEvent"
+            (eventDelete)="eventDelete($event)"
+            (eventApprove)="eventApprove($event)"
+            ></app-event-card>
         </div>
     </div>
     <div class="view-right">

@@ -14,6 +14,7 @@ namespace MISA.ApplicationCore.Models
     /// CREATED_BY: vmhoang
     class Employee : BaseModel
     {
+        #region Properties
         [PrimaryKey]
         [DisplayName("Khóa chính")]
         public Guid EmployeeId { get; set; }
@@ -39,5 +40,6 @@ namespace MISA.ApplicationCore.Models
         [MaxLength(255)]
         [DisplayName("Địa chỉ")]
         public string Address { get; set; }
+        #endregion
     }
 }

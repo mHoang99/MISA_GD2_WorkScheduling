@@ -5,6 +5,7 @@ import jwtDecode from "jwt-decode";
 import { BehaviorSubject, throwError } from "rxjs";
 import { catchError, tap } from 'rxjs/operators';
 import { User } from "src/app/models/user.model";
+import { AppServerResponse } from "../http/http.service";
 
 /**
  * Response data trả về khi xác thực
@@ -40,7 +41,7 @@ export class AuthService {
      */
     login(username: string, password: string) {
         return this.http
-            .post<AuthResponseData>(
+            .post<AppServerResponse<AuthResponseData>>(
                 this.baseRoute + '/login',
                 {
                     username: username,
@@ -52,15 +53,15 @@ export class AuthService {
                     return this.handleError(errorRes);
                 }),
                 tap(resData => {
-                    if (resData.user) {
+                    if (resData.success) {
                         this.handleAuthentication(
-                            resData.user.email,
-                            resData.user.userId,
-                            resData.user.username,
-                            resData.user.employeeId,
-                            resData.user.avatar,
-                            resData.accessToken,
-                            resData.refreshToken,
+                            resData.data.user.email,
+                            resData.data.user.userId,
+                            resData.data.user.username,
+                            resData.data.user.employeeId,
+                            resData.data.user.avatar,
+                            resData.data.accessToken,
+                            resData.data.refreshToken,
                         );
                     }
                 }),
@@ -126,7 +127,7 @@ export class AuthService {
 
         //Gọi api lấy access token mới
         return this.http
-            .post<AuthResponseData>(
+            .post<AppServerResponse<AuthResponseData>>(
                 this.baseRoute + '/refresh',
                 {
                     refreshToken: rToken,
@@ -138,7 +139,7 @@ export class AuthService {
                     return this.handleError(errorRes);
                 }),
                 tap(resData => {
-                    if (!resData) {
+                    if (!resData.success) {
                         this.logout();
                         return;
                     }
@@ -149,7 +150,7 @@ export class AuthService {
                         userData.username,
                         userData.employeeId,
                         userData.avatar,
-                        resData.accessToken,
+                        resData.data.accessToken,
                         userData._refreshToken,
                     );
 
@@ -191,7 +192,7 @@ export class AuthService {
     logout() {
         //Gửi req lên server
         this.http
-            .post<AuthResponseData>(
+            .post<AppServerResponse<AuthResponseData>>(
                 this.baseRoute + '/logout',
                 {}
             )

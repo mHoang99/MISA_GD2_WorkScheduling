@@ -2,8 +2,139 @@
     height: 100%;
     width: 100%;
     border-radius: 4px;
-    border: 2px solid orange;
-    &>div {
+    & > div {
         height: 100%;
+        width: 100%;
+    }
+
+    .no-content {
+        position: relative;
+        border-radius: 4px;
+        // border: 2px solid #ddd;
+        background-color: #ddd;
+
+        span {
+            text-align: center;
+            font-weight: 500;
+            text-transform: uppercase;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            opacity: 0.7;
+        }
+    }
+
+    .has-content {
+        box-shadow: 0 4px 8px 0 rgba(241, 119, 4, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        position: relative;
+        border-radius: 4px;
+        // border: 2px solid orange;
+        padding: 16px;
+
+        .label {
+            font-weight: 300;
+        }
+
+        & > div {
+            margin-bottom: 8px;
+        }
+
+        .title-row {
+            margin-bottom: 16px;
+
+            & > div:first-child {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .status {
+                    gap: 10px;
+                    // overflow: visible;
+
+                    .status-text {
+                        position: absolute;
+                        top: 80px;
+                        right: -25px;
+                        font-weight: 300;
+                        font-size: 0.8rem;
+                        text-transform: uppercase;
+                        transform: rotate(90deg);
+                        line-height: 40px;
+                    }
+
+                    .status-icon {
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 100%;
+                    }
+                }
+            }
+            .title {
+                font-size: 1.1rem;
+            }
+            .employee {
+                font-size: 0.8rem;
+                font-weight: 300;
+            }
+        }
+
+        .time-row {
+            display: flex;
+            gap: 4px;
+            div {
+            }
+        }
+
+        .approver-row {
+            margin-top: 16px;
+        }
+
+        .description-row {
+            margin-top: 16px;
+            width: 100%;
+            .label {
+                margin-bottom: 8px;
+            }
+            .description-container {
+                height: 100px;
+                width: 100%;
+                background-color: #eee;
+                padding: 8px;
+                border-radius: 4px;
+                overflow-y: auto;
+            }
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 16px 0 0 0;
+            button {
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                i {
+                    font-size: 1.3rem;
+                    margin-bottom: 1px;
+                    color: white;
+                }
+
+                &.btn-delete {
+                    background-color: #f65454;
+                }
+
+                &.btn-approve {
+                    background-color: orange;
+                }
+
+                &.btn-complete {
+                    background-color: #007bff;
+                }
+            }
+        }
     }
 }

@@ -6,9 +6,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss']
 })
-export class FooterComponent implements OnInit {
+export class SidebarComponent implements OnInit {
 
     isAuthenticated: boolean;
+
+    isManager: boolean;
 
     constructor(private authService: AuthService) {
     }
@@ -16,6 +18,7 @@ export class FooterComponent implements OnInit {
     ngOnInit() {
         this.authService.user.subscribe(user => {
             this.isAuthenticated = !!user;
+            this.isManager = user?.role == 1;
         })
     }
 

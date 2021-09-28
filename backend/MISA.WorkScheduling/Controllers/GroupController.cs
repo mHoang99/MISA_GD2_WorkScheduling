@@ -34,23 +34,14 @@ namespace MISA.WorkScheduling.API.Controllers
             var employeeId = HttpContext.User.FindFirst("employeeId").Value;
             Role userRole = (Role)Int32.Parse(HttpContext.User.FindFirst(ClaimTypes.Role)?.Value ?? "0");
 
-            
-
-            if(userRole != Role.MANAGER)
+            if (userRole != Role.MANAGER)
             {
                 return Unauthorized();
-            } 
+            }
 
             var res = await _service.GetOfManager(employeeId);
 
-            if (res.SuccessState)
-            {
-                return Ok(res.Data);
-            }
-            else
-            {
-                return Ok(res.ConvertToApiReturn());
-            }
+            return Ok(res.ConvertToApiReturn());
         }
     }
 }

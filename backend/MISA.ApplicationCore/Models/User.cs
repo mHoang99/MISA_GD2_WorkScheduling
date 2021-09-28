@@ -16,6 +16,8 @@ namespace MISA.ApplicationCore.Entities
     /// CREATED_BY: vmhoang
     public class User : BaseModel
     {
+        #region Properties
+
         [PrimaryKey]
         [DisplayName("Khóa chính")]
         public Guid UserId { get; set; } = new Guid();
@@ -38,5 +40,6 @@ namespace MISA.ApplicationCore.Entities
         public Guid? EmployeeId { get; set; }
         [DisplayName("Vai trò")]
         public Role Role { get; set; }
+        #endregion
     }
 }

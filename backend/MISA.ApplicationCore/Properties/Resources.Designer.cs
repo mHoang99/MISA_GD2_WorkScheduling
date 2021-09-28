@@ -140,5 +140,41 @@ namespace MISA.ApplicationCore.Properties {
                 return ResourceManager.GetString("MISA.ResponseMessage.RowAffectingUnexpectedFailure", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Token không tồn tại.
+        /// </summary>
+        internal static string MISA_ResponseMessage_TokenNotFound {
+            get {
+                return ResourceManager.GetString("MISA.ResponseMessage.TokenNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Người dùng không tồn tại.
+        /// </summary>
+        internal static string MISA_ResponseMessage_UserNotFound {
+            get {
+                return ResourceManager.GetString("MISA.ResponseMessage.UserNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mật khẩu không chính xác.
+        /// </summary>
+        internal static string MISA_ResponseMessage_WrongPassword {
+            get {
+                return ResourceManager.GetString("MISA.ResponseMessage.WrongPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thời gian kết thúc không được nhỏ hơn thời gian bắt đầu.
+        /// </summary>
+        internal static string MISA_ResponseMessage_WrongTimeOrder {
+            get {
+                return ResourceManager.GetString("MISA.ResponseMessage.WrongTimeOrder", resourceCulture);
+            }
+        }
     }
 }

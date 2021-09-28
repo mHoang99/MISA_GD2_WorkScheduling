@@ -47,7 +47,7 @@ namespace MISA.WorkScheduling.API.Middlewares
             var code = HttpStatusCode.InternalServerError;
 
             var result = JsonConvert.SerializeObject(
-                new ApiErrorReturn
+                new ApiReturn
                 {
                     UserMsg = Properties.Resources.MISA_ResponseMessage_Default,
                     ErrorCode = $"{Properties.Resources.MISA_ErrorCodePrefix}{ApplicationCore.Enums.MISACode.UnexpectedError}",

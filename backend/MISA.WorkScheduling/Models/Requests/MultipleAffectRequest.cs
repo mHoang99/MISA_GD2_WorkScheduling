@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace MISA.WorkScheduling.API.Models.Requests
 {
+    /// <summary>
+    /// Request body khi cần gửi nhiều id
+    /// </summary>
+    /// CREATED_BY: vmhoang
     public class MultipleAffectRequest
     {
         public IEnumerable<string> Ids { get; set; }

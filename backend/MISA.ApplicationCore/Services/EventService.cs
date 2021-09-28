@@ -9,19 +9,29 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MISA.ApplicationCore.Services
-{
+{    /// <summary>
+     /// Event service xử lý nghiệp vụ
+     /// </summary>
     public class EventService : BaseService<Event>, IEventService
     {
+        #region Fields
         private IBaseRepository<User> _userRepository;
 
         private new IEventRepository _repository;
 
-        public EventService(IEventRepository repository, IBaseRepository<User> userRepository) : base(repository)
+        private IGroupRepository _groupRepository;
+        #endregion
+
+        #region Constructors
+        public EventService(IEventRepository repository, IBaseRepository<User> userRepository, IGroupRepository groupRepository) : base(repository)
         {
             _userRepository = userRepository;
             _repository = repository;
+            _groupRepository = groupRepository;
         }
+        #endregion
 
+        #region Methods
         async public Task<ServiceResult> GetByUserId(string userId)
         {
             try
@@ -91,13 +101,70 @@ namespace MISA.ApplicationCore.Services
             }
         }
 
-        async public Task<ServiceResult> GetPendingByGroupId(string groupId)
+        public async Task<ServiceResult> GetOfEmployeeIdByRange(string employeeIdString, DateTime start, DateTime end)
         {
             try
             {
                 //kiểm tra id là guid
-                if (!CheckGuid($"id", groupId))
+                if (!CheckGuid($"id", employeeIdString))
                 {
+                    return serviceResult;
+                }
+
+                var parsedId = Guid.Parse(employeeIdString);
+
+                if (end < start)
+                {
+                    serviceResult.SuccessState = false;
+                    serviceResult.Data = "";
+                    serviceResult.DevMsg = Properties.Resources.MISA_ResponseMessage_WrongTimeOrder;
+                    serviceResult.UserMsg = serviceResult.DevMsg;
+                    return serviceResult;
+                }
+
+                var user = await _repository.GetEntitiesOfEmployeeByRange(parsedId, start, end);
+
+                serviceResult.SuccessState = true;
+                serviceResult.Data = user;
+
+                return serviceResult;
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(
+                    ex.Message,
+                    UnexpectedErrorResponse(ex.Message)
+                );
+            }
+        }
+
+        async public Task<ServiceResult> GetPendingByGroupId(string groupId, string managerId)
+        {
+            try
+            {
+                //kiểm tra id là guid
+                if (!CheckGuid($"groupId", groupId))
+                {
+                    return serviceResult;
+                }
+
+                //kiểm tra id là guid
+                if (!CheckGuid($"managerId", managerId))
+                {
+                    return serviceResult;
+                }
+
+                //Kiểm tra group đang lấy có thuộc thẩm quyền của user không
+                var groups = await _groupRepository.GetOfManager(Guid.Parse(managerId));
+
+                var groupFound = groups.FirstOrDefault(group => group.GroupId.ToString() == groupId);
+
+                //Không có quyền
+                if (groupFound == null)
+                {
+                    serviceResult.SuccessState = false;
+                    serviceResult.DevMsg = "";
+                    serviceResult.UserMsg = "";
                     return serviceResult;
                 }
 
@@ -235,5 +302,22 @@ namespace MISA.ApplicationCore.Services
                 );
             }
         }
+
+        async protected override Task<bool> CustomValidate(Event entity)
+        {
+            if (entity.EndTime < entity.StartTime)
+            {
+                serviceResult.SuccessState = false;
+                serviceResult.Data = "";
+                serviceResult.DevMsg = Properties.Resources.MISA_ResponseMessage_WrongTimeOrder;
+                serviceResult.UserMsg = serviceResult.DevMsg;
+                return false;
+            }
+            return true;
+        }
+        #endregion
+
+
+
     }
 }

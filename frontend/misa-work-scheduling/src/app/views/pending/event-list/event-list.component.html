@@ -1,44 +1,52 @@
 <div class="event-list-container">
     <div class="top-bar">
-        <div>Danh sách hàng chờ</div>
+        <div class="title">Danh sách chờ phê duyệt</div>
         <div *ngIf="isMultipleMode">
-            <button (click)="deleteMultipleEvents.emit(getListOfCheckedEventId())">Xóa hết</button>
-            <button (click)="approveMultipleEvents.emit(getListOfCheckedEventId())">Duyệt hết</button>
+            <button title="Xóa tất cả" class="m-btn" id="deleteAllBtn"
+                (click)="deleteMultipleEvents.emit(getListOfCheckedEventId())">
+                <i class="bi bi-trash"></i>
+            </button>
+            <button title="Duyệt tất cả" class="m-btn" id="approveAllBtn"
+                (click)="approveMultipleEvents.emit(getListOfCheckedEventId())">
+                <i class="bi bi-check2-circle"> </i>
+            </button>
         </div>
     </div>
     <div class="table-container">
         <table *ngIf="eventList && eventList.length > 0">
             <thead>
                 <tr>
-                    <th><input type="checkbox" name="checkAll" id="checkAll" [(ngModel)]="isCheckAll"></th>
-                    <th>#</th>
-                    <th style="min-width: 200px;">Tiêu đề</th>
-                    <th style="min-width: 150px;">Ngày bắt đầu</th>
-                    <th style="min-width: 120px;">Thời gian bắt đầu</th>
-                    <th style="min-width: 120px;">Ngày kết thúc</th>
-                    <th style="min-width: 120px;">Thời gian kết thúc</th>
-                    <th style="min-width: 80px;" *ngIf="!isMultipleMode">Options</th>
+                    <th id="" class="text-align-center"><input type="checkbox" name="checkAll" id="checkAll"
+                            [(ngModel)]="isCheckAll"></th>
+                    <th id="" class="text-align-center">#</th>
+                    <th style="min-width: 200px;" id="">Tiêu đề</th>
+                    <th style="min-width: 150px;" id="">Nhân viên</th>
+                    <th style="min-width: 150px;" id="" class="text-align-center">Ngày bắt đầu</th>
+                    <th style="min-width: 120px;" id="" class="text-align-center">Thời gian bắt đầu</th>
+                    <th style="min-width: 120px;" id="" class="text-align-center">Ngày kết thúc</th>
+                    <th style="min-width: 120px;" id="" class="text-align-center">Thời gian kết thúc</th>
+                    <th style="min-width: 120px;" id="" class="text-align-center">Ngày tạo</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let event of eventList; let i = index; trackBy:trackByIdx"
                     (click)="selectEventRow(event.eventId)">
-                    <td><input type="checkbox" name="" id="" [(ngModel)]="isCheck[i]"
-                            (ngModelChange)="checkBoxModalValueChange($event)"></td>
-                    <td>{{i+1}}</td>
+                    <td class="text-align-center"><input type="checkbox" name="" id="" [(ngModel)]="isCheck[i]"
+                            (ngModelChange)="checkBoxModelValueChange($event)"></td>
+                    <td class="text-align-center">{{i+1}}</td>
                     <td>{{event.title}}</td>
-                    <td>{{event.startTime | date:'dd/MM/yyyy'}}</td>
-                    <td>{{event.startTime | date:'HH:mm'}}</td>
-                    <td>{{event.endTime | date:'dd/MM/yyyy'}}</td>
-                    <td>{{event.endTime | date:'HH:mm'}}</td>
-                    <td *ngIf="!isMultipleMode">
-                        <button (click)="deleteEvent.emit(event.eventId)">Xóa</button>
-                        <button (click)="approveEvent.emit(event.eventId)">Duyệt</button>
-                    </td>
+                    <td>{{event.fullName}}</td>
+                    <td class="text-align-center">{{event.startTime | date:'dd/MM/yyyy'}}</td>
+                    <td class="text-align-center">{{event.startTime | date:'HH:mm'}}</td>
+                    <td class="text-align-center">{{event.endTime | date:'dd/MM/yyyy'}}</td>
+                    <td class="text-align-center">{{event.endTime | date:'HH:mm'}}</td>
+                    <td class="text-align-center">{{event.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
                 </tr>
             </tbody>
         </table>
+        <div *ngIf="isLoading" class="loading-container">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
+        <div *ngIf="(!eventList || eventList.length <= 0) && !isLoading">Không có dữ liệu</div>
     </div>
-
-    <div *ngIf="!eventList || eventList.length <= 0">Không có dữ liệu</div>
 </div>

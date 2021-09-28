@@ -17,10 +17,22 @@ namespace MISA.ApplicationCore.Helpers
         /// </summary>
         /// <param name="serviceResult"></param>
         /// <returns>instance của ApiErrorReturn</returns>
-        public static ApiErrorReturn ConvertToApiReturn(this ServiceResult serviceResult)
+        public static ApiReturn ConvertToApiReturn(this ServiceResult serviceResult)
         {
-            var aer = new ApiErrorReturn
+            if(serviceResult.SuccessState)
             {
+                serviceResult.MISACode = Enums.MISACode.Success;
+                serviceResult.DevMsg = "";
+                serviceResult.UserMsg = "";
+            } else
+            {
+                serviceResult.Data = null;
+            }
+
+            var aer = new ApiReturn
+            {
+                Success = serviceResult.SuccessState,
+                Data = serviceResult.Data,
                 DevMsg = serviceResult.DevMsg,
                 UserMsg = serviceResult.UserMsg,
                 ErrorCode = $"misa-{serviceResult.MISACode.GetHashCode()}"

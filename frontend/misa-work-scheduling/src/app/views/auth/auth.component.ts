@@ -33,14 +33,13 @@ export class AuthComponent {
         //Gọi api login từ service 
         this.authService.login(username, password).subscribe(
             resData => {
-                console.log(resData);
-                this.isLoading = false;
-                if (!resData.user) {
+                if (!resData.success) {
                     this.error = resData['userMsg']
                 }
                 else {
                     this.router.navigate(['/calendar'])
                 }
+                this.isLoading = false;
             },
             error => {
                 console.log(error);

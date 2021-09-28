@@ -13,6 +13,8 @@ namespace MISA.ApplicationCore.Models
     /// CREATED_BY: vmhoang
     class Manager : BaseModel
     {
+        #region Properties
+
         [PrimaryKey]
         [DisplayName("Khóa chính")]
         public Guid ManagerId { get; set; }
@@ -22,5 +24,6 @@ namespace MISA.ApplicationCore.Models
 
         [DisplayName("Khối phụ trách")]
         public Guid GroupId { get; set; }
+        #endregion
     }
 }

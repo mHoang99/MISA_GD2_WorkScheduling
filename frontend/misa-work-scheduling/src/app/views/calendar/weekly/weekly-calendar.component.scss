@@ -1,4 +1,5 @@
 .calendar-container {
     overflow: hidden;
-    height: 600px;
+    height: calc(100vh - 180px);
+    margin-top: 16px;
 }

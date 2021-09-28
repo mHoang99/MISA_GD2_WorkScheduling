@@ -1,0 +1,55 @@
+.notification-center {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 30px;
+    background-color: transparent;
+    z-index: 1000;
+
+    .m-toast {
+        background-color: white;
+        color: black;
+        z-index: 1001;
+        min-width: 300px;
+        padding: 16px 16px;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        margin-bottom: 8px;
+
+        &.success {
+            border-right: 5px solid #01b075;
+        }
+
+        &.info {
+            border-right: 5px solid #0075ff;
+        }
+
+        &.warning {
+            border-right: 5px solid orangered;
+        }
+
+        animation: toast-slide-down 0.5s ease-out;
+    }
+
+    @keyframes toast-slide-down {
+        0% {
+            opacity: 1;
+            transform: translateY(-200%) translateX(0%);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0) translateX(0%);
+        }
+    }
+
+    @keyframes toast-fade {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+}

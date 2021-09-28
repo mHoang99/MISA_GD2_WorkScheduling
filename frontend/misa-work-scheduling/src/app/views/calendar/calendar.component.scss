@@ -3,4 +3,26 @@
     padding: 24px;
     width: 100%;
     overflow-y: auto;
+
+    .view-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .title {
+            font-weight: 300;
+            font-size: 1.5rem;
+        }
+
+        .btn-add {
+            &:hover {
+                background-color: orangered;
+                color: white;
+            }
+        }
+    }
+
+    .event-dialog {
+        width: 300px;
+    }
 }

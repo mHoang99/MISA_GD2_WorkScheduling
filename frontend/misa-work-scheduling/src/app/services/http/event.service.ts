@@ -2,21 +2,32 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { catchError } from "rxjs/operators";
+import { NotificationService } from "src/app/components/layouts/notification/notification.service";
 import { CalendarEvent } from "src/app/models/event.model";
-import { HttpService } from "./http.service";
+import { AppServerResponse, HttpService } from "./http.service";
 
 @Injectable({ providedIn: 'root' })
 export class EventService extends HttpService {
 
     protected defaultPath = "/Events";
 
-    constructor(http: HttpClient, router: Router) {
-        super(http, router);
+    constructor(http: HttpClient, router: Router, notificationService: NotificationService) {
+        super(http, router, notificationService);
     }
 
-    public getAllEvents() {
-        return this.http.get<[CalendarEvent]>(
-            this.defaultPath + "/All"
+    /**
+     * Lấy sự kiện theo khoảng thời gian
+     * @param start bắt đầu
+     * @param end kết thúc
+     * @returns 
+     */
+    public getEventsByRange(start: Date, end: Date) {
+        return this.http.post<AppServerResponse<CalendarEvent[]>>(
+            this.defaultPath + "/Range",
+            {
+                start: start,
+                end: end
+            }
         ).pipe(
             catchError(errorRes => {
                 return this.handleError(errorRes);
@@ -24,8 +35,13 @@ export class EventService extends HttpService {
         )
     }
 
+    /**
+     * Xóa nhiều
+     * @param ids 
+     * @returns 
+     */
     public deleteMultiple(ids: string[]) {
-        return this.http.delete(
+        return this.http.delete<AppServerResponse<number>>(
             this.defaultPath + `/MultipleRemoval`,
             {
                 body: { ids: ids },
@@ -37,8 +53,13 @@ export class EventService extends HttpService {
         )
     }
 
+    /**
+     * duyệt nhiều
+     * @param ids 
+     * @returns 
+     */
     public approveMultiple(ids: string[]) {
-        return this.http.put(
+        return this.http.put<AppServerResponse<number>>(
             this.defaultPath + `/MultipleApproval`,
             { ids: ids }
         ).pipe(
@@ -48,8 +69,13 @@ export class EventService extends HttpService {
         )
     }
 
+    /**
+     * hoàn thành 1
+     * @param id 
+     * @returns 
+     */
     public complete(id: string) {
-        return this.http.put(
+        return this.http.put<AppServerResponse<number>>(
             this.defaultPath + `/Completion/${id}`,
             {}
         ).pipe(
@@ -59,8 +85,13 @@ export class EventService extends HttpService {
         )
     }
 
+    /**
+     * Lấy sự kiện theo group
+     * @param id 
+     * @returns 
+     */
     public getByGroup(id: string) {
-        return this.http.get<[CalendarEvent]>(
+        return this.http.get<AppServerResponse<CalendarEvent[]>>(
             this.defaultPath + `/Group/${id}`
         ).pipe(
             catchError(errorRes => {

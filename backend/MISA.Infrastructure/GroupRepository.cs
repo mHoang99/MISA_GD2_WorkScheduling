@@ -10,12 +10,19 @@ using System.Threading.Tasks;
 
 namespace MISA.Infrastructure
 {
+    /// <summary>
+    /// Group Repository kết nối database
+    /// </summary>
+    /// CREATEDBY: VMHOANG
     public class GroupRepository : BaseRepository<Group>, IGroupRepository
     {
+        #region Constructor
         public GroupRepository(IDBContext dbContext) : base(dbContext)
         {
         }
+        #endregion
 
+        #region Methods
         public async Task<IEnumerable<dynamic>> GetOfManager(Guid employeeId)
         {
             try
@@ -24,7 +31,7 @@ namespace MISA.Infrastructure
 
                 parameters.Add($"@EmployeeId", employeeId, DbType.String);
 
-
+                //thực hiện query
                 var result = await _dbConnection.QueryAsync($"Proc_Get{_tableName}sHavingMangerEmployeeId", parameters, commandType: CommandType.StoredProcedure);
 
                 return result;
@@ -34,5 +41,6 @@ namespace MISA.Infrastructure
                 throw;
             }
         }
+        #endregion
     }
 }

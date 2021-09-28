@@ -1,25 +1,25 @@
 <div class="login-container">
-    <div class="form-loading" *ngIf="isLoading">
-        <app-loading-spinner></app-loading-spinner>
+    <div class="form-container">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        <form #authForm="ngForm" class="form-login" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+            <div id="login-title">
+                <span>Xin chào</span>
+            </div>
+            <div class="input-box">
+                <i class="bi bi-person"></i>
+                <input class="form-control" name="username" id="username" placeholder="Tên đăng nhập" ngModel required>
+            </div>
+
+            <div class="input-box">
+                <i class="bi bi-key"></i>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" ngModel
+                    required>
+            </div>
+
+            <button type="submit" [disabled]="!authForm.valid">Đăng nhập</button>
+            <span class="form-warning" id="form-warning">{{error}}</span>
+        </form>
     </div>
-    <form #authForm="ngForm" class="form-login" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
-        <div id="login-title">
-            <span>Xin chào</span>
-        </div>
-        <div class="input-box">
-            <i class="bi bi-person"></i>
-            <input class="form-control" name="username" id="username" placeholder="Tên đăng nhập" ngModel required>
-        </div>
-
-        <div class="input-box">
-            <i class="bi bi-key"></i>
-            <input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" ngModel
-                required>
-        </div>
-
-        <button type="submit" [disabled]="!authForm.valid">Đăng nhập</button>
-        <span class="form-warning" id="form-warning">{{error}}</span>
-    </form>
     <div class="login-preview">
         <img src="../../../assets/images/login-thumbnail-2.png" alt="not found" />
     </div>

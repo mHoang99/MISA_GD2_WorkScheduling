@@ -25,6 +25,7 @@ export class AuthGuard implements CanActivate {
                 if (isAuth) {
                     console.log(user.role)
 
+                    //Kiểm tra role có nằm trong danh sách cho phép truy cập không
                     if (!(route.data.role && route.data.role.indexOf(user.role) === -1)) {
                         return true;
                     } else {

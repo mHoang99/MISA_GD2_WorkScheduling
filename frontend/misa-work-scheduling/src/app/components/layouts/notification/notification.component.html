@@ -1,0 +1,7 @@
+<div class="notification-center">
+    <div *ngFor="let noti of notiList" [class]="noti.type + ' m-toast'">
+        <div></div>
+        <div>{{noti.message}}</div>
+        <div></div>
+    </div>
+</div>

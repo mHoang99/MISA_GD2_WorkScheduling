@@ -12,7 +12,7 @@ import bootstrapPlugin from '@fullcalendar/bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/layouts/header/header.component';
-import { FooterComponent } from './components/layouts/sidebar/sidebar.component';
+import { SidebarComponent } from './components/layouts/sidebar/sidebar.component';
 import { AuthComponent } from './views/auth/auth.component';
 import { LoadingSpinnerComponent } from './components/base/loading-spinner/loading-spinner.component';
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
@@ -30,6 +30,7 @@ import { GroupListComponent } from './views/pending/group-list/group-list.compon
 import { PendingEventListComponent } from './views/pending/event-list/event-list.component';
 import { EventDetailsCardComponent } from './components/event-card/event-card.component';
 import { PopupComponent } from './components/base/popup/popup.component';
+import { NotificationCenterComponent } from './components/layouts/notification/notification.component';
 
 FullCalendarModule.registerPlugins([
     dayGridPlugin,
@@ -42,7 +43,7 @@ FullCalendarModule.registerPlugins([
     declarations: [
         AppComponent,
         HeaderComponent,
-        FooterComponent,
+        SidebarComponent,
         AuthComponent,
         LoadingSpinnerComponent,
         HomeComponent,
@@ -56,7 +57,8 @@ FullCalendarModule.registerPlugins([
         EventDetailsCardComponent,
         PendingEventListComponent,
         PopupComponent,
-        ModalComponent
+        ModalComponent,
+        NotificationCenterComponent,
     ],
     imports: [
         BrowserModule,

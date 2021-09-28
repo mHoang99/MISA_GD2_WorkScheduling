@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { CalendarEvent } from "src/app/models/event.model";
 import { EventService } from "src/app/services/http/event.service";
+import { NotificationService } from "../../../components/layouts/notification/notification.service";
 
 @Component({
     selector: "app-calendar-add-form",
@@ -9,13 +9,19 @@ import { EventService } from "src/app/services/http/event.service";
     styleUrls: ["./add-form.component.scss"]
 })
 export class CalendarAddFormComponent {
+    //Hiện form
     @Input() isShow = false;
+    //Hiển thị form thay đổi
     @Output() isShowChange = new EventEmitter();
 
+    @Output() onSuccess = new EventEmitter();
+
+    //Đang loading
     isLoading = false;
+
     error: string = "";
 
-    constructor(private eventService: EventService) {}
+    constructor(private eventService: EventService, private notificationService: NotificationService) {}
 
     /**
      * Handle sự kiện form submit
@@ -28,6 +34,7 @@ export class CalendarAddFormComponent {
             return;
         }
 
+        //Lấy giá trị từ form
         const title = form.value.title;
         const content = form.value.content;
         const startDate = form.value.startDate;
@@ -35,6 +42,7 @@ export class CalendarAddFormComponent {
         const endDate = form.value.endDate;
         const endTime = form.value.endTime;
 
+        //gộp ngày và giờ
         let startDateTime = new Date(startDate);
         startDateTime.setUTCHours(startTime.split(':')[0]);
         startDateTime.setUTCMinutes(startTime.split(':')[1]);
@@ -43,12 +51,9 @@ export class CalendarAddFormComponent {
         endDateTime.setUTCHours(endTime.split(':')[0]);
         endDateTime.setUTCMinutes(startTime.split(':')[1]);
 
-        console.log(startTime, endTime)
-        console.log(startDate, endDate)
-        console.log(startDateTime, endDateTime)
-
         this.isLoading = true;
 
+        //Gọi service 
         this.eventService.post({
             title: title,
             content: content,
@@ -57,9 +62,14 @@ export class CalendarAddFormComponent {
             endTime: endDateTime
         }).subscribe(
             resData => {
-                console.log(resData);
+                if(!resData.success) {
+                    this.error = resData['userMsg']
+                } else {
+                    this.notificationService.addSuccessNotification("Đã thêm sự kiện vào kế hoạch");
+
+                }
+                this.onSuccess.emit();
                 this.isLoading = false;
-                console.log(resData)
             },
             error => {
                 this.isLoading = false;

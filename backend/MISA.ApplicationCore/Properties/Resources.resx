@@ -144,4 +144,16 @@
   <data name="MISA.ResponseMessage.RowAffectingUnexpectedFailure" xml:space="preserve">
     <value>Tác động bản ghi trong CSDL thất bại</value>
   </data>
+  <data name="MISA.ResponseMessage.TokenNotFound" xml:space="preserve">
+    <value>Token không tồn tại</value>
+  </data>
+  <data name="MISA.ResponseMessage.UserNotFound" xml:space="preserve">
+    <value>Người dùng không tồn tại</value>
+  </data>
+  <data name="MISA.ResponseMessage.WrongPassword" xml:space="preserve">
+    <value>Mật khẩu không chính xác</value>
+  </data>
+  <data name="MISA.ResponseMessage.WrongTimeOrder" xml:space="preserve">
+    <value>Thời gian kết thúc không được nhỏ hơn thời gian bắt đầu</value>
+  </data>
 </root>

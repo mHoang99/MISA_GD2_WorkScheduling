@@ -43,6 +43,14 @@ export class WeeklyCalendarViewComponent extends BaseCalendarView implements OnI
         },
 
         /**
+         * Hàm handle khi set lại ngày
+         * @param date 
+         */
+        datesSet: (date) => {
+            this.loadEvents(date.start, date.end);
+        },
+
+        /**
          * Hàm xử lý khi bấm vào 1 event
          * @param info 
          */

@@ -12,7 +12,7 @@ namespace MISA.Infrastructure.Database
     /// <summary>
     /// Class quản lý connection
     /// </summary>
-    /// CREATED_BY: vmhoang (22/07/2021)
+    /// CREATED_BY: vmhoang
     public class DBContext : IDBContext
     {
         #region Properties

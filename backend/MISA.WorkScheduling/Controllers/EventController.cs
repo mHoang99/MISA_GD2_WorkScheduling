@@ -55,6 +55,31 @@ namespace MISA.WorkScheduling.API.Controllers
         }
 
         /// <summary>
+        /// Lấy theo khoảng thời gian
+        /// </summary>
+        /// <param name="id">Id của bản ghi</param>
+        /// <returns></returns>
+        /// CREATED_BY: vmhoang
+        [HttpPost("Range")]
+        [Authorize]
+        async public Task<IActionResult> GetByRangeForEmployee([FromBody] TimeRangeRequest body)
+        {
+            var userIdString = HttpContext.User.FindFirst("id").Value;
+            var employeeIdString = HttpContext.User.FindFirst("employeeId").Value;
+
+            var res = await _service.GetOfEmployeeIdByRange(employeeIdString, body.start, body.end);
+
+            if (res.SuccessState)
+            {
+                return Ok(res.ConvertToApiReturn());
+            }
+            else
+            {
+                return Unauthorized(res.ConvertToApiReturn());
+            }
+        }
+
+        /// <summary>
         /// Lấy danh sách chờ phê duyệt theo group
         /// </summary>
         /// <param name="id">Id của bản ghi</param>
@@ -72,18 +97,14 @@ namespace MISA.WorkScheduling.API.Controllers
                 return Unauthorized();
             }
             
-            //TODO: Kiểm tra group đang lấy có thuộc thẩm quyền của user không
+            var res = await _service.GetPendingByGroupId(id, employeeId);
 
-            var res = await _service.GetPendingByGroupId(id);
-            
-            if (res.SuccessState)
-            {
-                return Ok(res.Data);
-            }
-            else
+            if(!res.SuccessState )
             {
                 return Unauthorized(res.ConvertToApiReturn());
             }
+
+            return Ok(res.ConvertToApiReturn());
         }
 
 
@@ -106,7 +127,7 @@ namespace MISA.WorkScheduling.API.Controllers
 
             if (res.SuccessState)
             {
-                return Ok(res.Data);
+                return Ok(res.ConvertToApiReturn());
             }
             else
             {
@@ -138,7 +159,7 @@ namespace MISA.WorkScheduling.API.Controllers
 
             if (res.SuccessState)
             {
-                return Ok(res.Data);
+                return Ok(res.ConvertToApiReturn());
             }
             else
             {
@@ -164,7 +185,7 @@ namespace MISA.WorkScheduling.API.Controllers
 
             if (res.SuccessState)
             {
-                return Ok(res.Data);
+                return Ok(res.ConvertToApiReturn());
             }
             else
             {

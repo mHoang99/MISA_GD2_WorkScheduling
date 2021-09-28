@@ -8,8 +8,16 @@ using System.Threading.Tasks;
 
 namespace MISA.ApplicationCore.Authentication.Hashers
 {
+    /// <summary>
+    /// Class chứa các hàm hash
+    /// </summary>
     public static class Hasher
     {
+        /// <summary>
+        /// Băm theo SHA256
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>Hashed string</returns>
         public static string Sha256Hash(string value)
         {
             StringBuilder Sb = new StringBuilder();
@@ -26,11 +34,22 @@ namespace MISA.ApplicationCore.Authentication.Hashers
             return Sb.ToString();
         }
 
+        /// <summary>
+        /// Hash theo BCrypt
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>String đã được hash</returns>
         public static string BcryptHash(string value)
         {
             return BCryptNet.HashPassword(value);
         }
 
+        /// <summary>
+        /// Kiểm tra bcrypt
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="hashedPassword"></param>
+        /// <returns>true | false</returns>
         public static bool BCryptVerify(string password, string hashedPassword)
         {
             return BCryptNet.Verify(password, hashedPassword);

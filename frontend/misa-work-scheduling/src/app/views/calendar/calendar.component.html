@@ -1,15 +1,16 @@
 <div>
-    <div>Kế hoạch làm việc</div>
-    <app-calendar-add-form [isShow]='isAddFormShow' (isShowChange)="isAddFormShowChange($event)">
-    </app-calendar-add-form>
-    <div>
-        <button (click)="addEventBtnClick()">Thêm sự kiện</button>
+    <div class="view-title">
+        <div class="title">Kế hoạch làm việc</div>
+        <button class="m-btn btn-add" (click)="addEventBtnClick()">Thêm sự kiện</button>
     </div>
     <router-outlet (activate)="onActivate($event)"></router-outlet>
-    <app-modal [isShow]="isEventDetailsShow" [isLoading]="eventCardLoading" (isShowChange)="isEventDetailsShow=$event">
-        <app-event-card slot="body" [event]="selectingEvent" mode="view" (eventClose)="isEventDetailsShow = false"
-            (eventDelete)="deleteEvent($event)"
-            (eventComplete)="completeEvent($event)">
-        </app-event-card>
+    <app-modal [isShow]="isEventDetailsShow" (isShowChange)="isEventDetailsShow=$event">
+        <div slot="body" class="event-dialog">
+            <app-event-card [event]="selectingEvent" mode="view" (eventClose)="isEventDetailsShow = false"
+                (eventDelete)="deleteEvent($event)" (eventComplete)="completeEvent($event)">
+            </app-event-card>
+        </div>
     </app-modal>
+    <app-calendar-add-form [isShow]='isAddFormShow' (isShowChange)="isAddFormShowChange($event)" (onSuccess)="onAddFromSuccess()">
+    </app-calendar-add-form>
 </div>

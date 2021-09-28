@@ -1,5 +1,8 @@
 import jwtDecode from "jwt-decode";
 
+/**
+ * Model cho người dùng
+ */
 export class User {
     constructor(
         public email: string,
@@ -14,6 +17,7 @@ export class User {
     ) {}
 
     get accessToken() {
+        //kiểm tra hạn
         if(!this._accessTokenExpDate || new Date() > this._accessTokenExpDate) {
             return null;
         }
@@ -21,6 +25,7 @@ export class User {
     }
 
     get refreshToken() {
+        //kiểm tra hạn
         if(!this._refreshTokenExpDate || new Date() > this._refreshTokenExpDate) {
             return null;
         }
@@ -36,6 +41,7 @@ export class User {
     }
 
     get role() {
+        //Lấy role bằng cách decode token
         let decodedToken = jwtDecode(this._accessToken);
         return decodedToken['role'];
     }

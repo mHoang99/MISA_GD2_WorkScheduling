@@ -13,6 +13,8 @@ namespace MISA.ApplicationCore.Models
     /// CREATED_BY: vmhoang
     public class Group : BaseModel
     {
+        #region Properties
+
         [PrimaryKey]
         [DisplayName("Khóa chính")]
         public Guid GroupId { get; set; }
@@ -29,6 +31,6 @@ namespace MISA.ApplicationCore.Models
         [MaxLength(255)]
         [DisplayName("Mô tả")]
         public string Description { get; set; }
-
+        #endregion
     }
 }

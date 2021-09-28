@@ -14,6 +14,7 @@ namespace MISA.ApplicationCore.Models
     /// CREATED_BY: vmhoang
     public class RefreshToken : BaseModel
     {
+        #region Properties
         [PrimaryKey]
         [DisplayName("Khóa chính")]
         public Guid RefreshTokenId { get; set; }
@@ -23,5 +24,6 @@ namespace MISA.ApplicationCore.Models
         
         [DisplayName("Người dùng")]
         public Guid UserId { get; set; }
+        #endregion
     }
 }

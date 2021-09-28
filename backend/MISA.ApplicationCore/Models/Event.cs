@@ -14,6 +14,7 @@ namespace MISA.ApplicationCore.Models
     /// CREATED_BY: vmhoang
     public class Event : BaseModel
     {
+        #region Properties
         [PrimaryKey]
         [DisplayName("Khóa chính")]
         public Guid EventId { get; set; }
@@ -30,15 +31,18 @@ namespace MISA.ApplicationCore.Models
         public Guid EmployeeId{ get; set; }
 
         [DisplayName("Thời gian bắt đầu")]
+        [Required]
         public DateTime StartTime { get; set; }
 
         [DisplayName("Thời gian kết thúc")]
+        [Required]
         public DateTime EndTime { get; set; }
 
         [DisplayName("Trạng thái")]
-        public EventState CurrentStatus { get; set; }
+        public EventState CurrentStatus { get; set; } = EventState.WAITING;
 
         [DisplayName("Người cấp phép")]
         public Guid? ApproverId { get; set; }
+        #endregion
     }
 }

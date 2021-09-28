@@ -10,13 +10,19 @@ using System.Threading.Tasks;
 
 namespace MISA.Infrastructure
 {
+    /// <summary>
+    /// Event Repository kết nối database
+    /// </summary>
+    /// CREATEDBY: VMHOANG
     public class EventRepository : BaseRepository<Event>, IEventRepository
     {
-
+        #region Constructor
         public EventRepository(IDBContext dbContext) : base(dbContext)
         {
         }
+        #endregion
 
+        #region Methods
         public async Task<IEnumerable<object>> GetEntitiesByEmployeeId(Guid employeeId)
         {
             try
@@ -63,6 +69,26 @@ namespace MISA.Infrastructure
                 parameters.Add($"@ManagerId", managerId, DbType.String);
 
                 var result = await _dbConnection.QueryAsync($"Proc_Get{_tableName}sByManagerId", parameters, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<object>> GetEntitiesOfEmployeeByRange(Guid employeeId, DateTime start, DateTime end)
+        {
+            try
+            {
+                var parameters = new DynamicParameters();
+
+                parameters.Add($"@EmployeeId", employeeId, DbType.String);
+                parameters.Add($"@StartTime", start);
+                parameters.Add($"@EndTime", end);
+
+                var result = await _dbConnection.QueryAsync($"Proc_Get{_tableName}sOfEmployeeByTimeRange", parameters, commandType: CommandType.StoredProcedure);
 
                 return result;
             }
@@ -150,5 +176,7 @@ namespace MISA.Infrastructure
 
             return rowsAffected;
         }
+        #endregion
+
     }
 }
